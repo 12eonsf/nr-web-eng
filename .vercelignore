@@ -1,0 +1,15 @@
+node_modules
+dist
+.agents
+.DS_Store
+*.log
+DESIGN.md
+PRODUCT.md
+design-dna-blogum.json
+public/assets/.DS_Store
+public/assets/partners/.DS_Store
+public/assets/WechatIMG139.jpeg
+public/assets/ed8d33813adf30e72751b853c40d239f.JPG
+public/assets/首页.jpg
+public/assets/心灵_COCO.jpeg
+public/assets/恐惧_Ines Cui.jpg

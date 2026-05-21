@@ -1,0 +1,373 @@
+{
+  "meta": {
+    "name": "Blogum Newspaper Blog Magazine WordPress Theme Design DNA",
+    "description": "Design DNA extracted from the public ThemeForest item page for Blogum. The full-screen preview URL was protected by Cloudflare in command-line access, so visual values combine official feature descriptions, item metadata, and conservative inference from the listed editorial/magazine system.",
+    "source_references": [
+      "https://preview.themeforest.net/item/blogum-newspaper-blog-magazine-wordpress-theme/full_screen_preview/63060615",
+      "https://themeforest.net/item/blogum-newspaper-blog-magazine-wordpress-theme/63060615"
+    ],
+    "created_at": "2026-05-21",
+    "confidence": "medium: official item page was accessible, full interactive preview was blocked by Cloudflare challenge"
+  },
+  "design_system": {
+    "color": {
+      "palette_type": "monochromatic with editorial accent",
+      "primary": {
+        "hex": "#111111",
+        "role": "dominant ink color for headlines, navigation, dividers, and brutalist editorial framing"
+      },
+      "secondary": {
+        "hex": "#F5F1EA",
+        "role": "warm paper-like background surface for magazine layouts"
+      },
+      "accent": {
+        "hex": "#C5162E",
+        "role": "breaking news labels, progress bar, active states, and urgent editorial calls to action"
+      },
+      "neutral": {
+        "scale": {
+          "50": "#FAFAF7",
+          "100": "#F5F1EA",
+          "200": "#E6E0D6",
+          "300": "#CFC7BB",
+          "500": "#77716A",
+          "700": "#3A3733",
+          "900": "#111111"
+        },
+        "usage": "large light editorial surfaces, near-black text, subtle beige-gray dividers, and grayscale media treatments"
+      },
+      "semantic": {
+        "success": "#1F8A4C",
+        "warning": "#D98B19",
+        "error": "#C5162E",
+        "info": "#246BFE"
+      },
+      "surface": {
+        "background": "#F5F1EA",
+        "card": "#FFFFFF",
+        "elevated": "#111111"
+      },
+      "contrast_strategy": "high contrast dark-on-light with occasional inverted black panels and sharp red editorial accents"
+    },
+    "typography": {
+      "type_scale": {
+        "display": {
+          "size": "clamp(56px, 8vw, 132px)",
+          "weight": "700",
+          "line_height": "0.9",
+          "tracking": "0"
+        },
+        "heading_1": {
+          "size": "clamp(42px, 5vw, 86px)",
+          "weight": "700",
+          "line_height": "0.95",
+          "tracking": "0"
+        },
+        "heading_2": {
+          "size": "clamp(30px, 3vw, 52px)",
+          "weight": "700",
+          "line_height": "1.02",
+          "tracking": "0"
+        },
+        "heading_3": {
+          "size": "24px",
+          "weight": "700",
+          "line_height": "1.12",
+          "tracking": "0"
+        },
+        "body": {
+          "size": "17px",
+          "weight": "400",
+          "line_height": "1.65",
+          "tracking": "0"
+        },
+        "body_small": {
+          "size": "14px",
+          "weight": "400",
+          "line_height": "1.45",
+          "tracking": "0"
+        },
+        "caption": {
+          "size": "12px",
+          "weight": "500",
+          "line_height": "1.3",
+          "tracking": "0"
+        },
+        "overline": {
+          "size": "11px",
+          "weight": "700",
+          "line_height": "1.1",
+          "tracking": "0.08em"
+        }
+      },
+      "font_families": {
+        "heading": "Playfair Display, Cormorant Garamond, Abril Fatface, Georgia, serif",
+        "body": "Inter, Jost, Outfit, system-ui, sans-serif",
+        "mono": "Space Mono, ui-monospace, SFMono-Regular, monospace"
+      },
+      "font_style_notes": "luxury editorial serif display paired with clean modern sans body; optional condensed sans for ticker, labels, and magazine metadata"
+    },
+    "spacing": {
+      "base_unit": "8px",
+      "scale": ["4px", "8px", "12px", "16px", "24px", "32px", "48px", "64px", "96px", "128px"],
+      "content_density": "comfortable editorial density with compact metadata rows and generous feature-story breathing room",
+      "section_rhythm": "large vertical editorial blocks, tight card internals, and strong separation between feature, feed, ticker, and archive modules"
+    },
+    "layout": {
+      "grid_system": "split-screen magazine architecture with sticky left cover panel and scrollable right content feed",
+      "max_content_width": "1440px overall, 680px to 920px reading column depending on module",
+      "columns": "desktop split pane plus 2-4 column modular grids, masonry, bento, mosaic, and list variants",
+      "gutter": "24px desktop, 16px tablet, 12px mobile",
+      "breakpoints": {
+        "mobile": "0-767px",
+        "tablet": "768-1023px",
+        "desktop": "1024-1439px",
+        "wide": "1440px+"
+      },
+      "alignment_tendency": "strict editorial grid with controlled asymmetry from split panes and mosaic story placement"
+    },
+    "shape": {
+      "border_radius": {
+        "small": "0px",
+        "medium": "2px",
+        "large": "4px",
+        "pill": "999px"
+      },
+      "border_usage": "subtle to strong 1px editorial rules, card separators, framed images, and module boundaries",
+      "divider_style": "thin hairline dividers in black or warm gray, sometimes used as strong newspaper-like rules"
+    },
+    "elevation": {
+      "shadow_style": "minimal; depth mostly comes from contrast, image scale, sticky layering, and occasional shadow tile modules",
+      "levels": {
+        "low": "0 1px 0 rgba(17,17,17,0.12)",
+        "medium": "0 12px 30px rgba(17,17,17,0.12)",
+        "high": "0 28px 80px rgba(17,17,17,0.22)"
+      },
+      "depth_cues": "sticky panels, overlay text on media, grayscale-to-color image treatment, clipped reveals, and occasional glass/archive modules"
+    },
+    "iconography": {
+      "style": "minimal line icons for social share, navigation, search, and utility actions",
+      "stroke_weight": "1.5px to 2px",
+      "size_scale": ["16px", "20px", "24px", "32px"],
+      "preferred_set": "Lucide-style or Feather-style outline icons"
+    },
+    "motion": {
+      "easing": "cubic-bezier(0.22, 1, 0.36, 1)",
+      "duration_scale": {
+        "micro": "120ms",
+        "normal": "280ms",
+        "macro": "700ms"
+      },
+      "entrance_pattern": "IntersectionObserver-triggered fade-up, clip reveal, image zoom, and cover-panel cinematic transitions",
+      "exit_pattern": "quick fade or slide out, especially for overlays and up-next strips",
+      "philosophy": "cinematic but performance-aware editorial motion without heavy dependency on animation libraries"
+    },
+    "components": {
+      "button_style": "sharp rectangular ghost buttons, black filled buttons, and red label-style CTAs with uppercase metadata styling",
+      "input_style": "minimal underlined or 1px bordered fields, square corners, high contrast focus state",
+      "card_style": "image-led editorial cards with category labels, reading time, bold title hierarchy, and restrained borders",
+      "navigation_pattern": "sticky or persistent magazine navigation with responsive overlay menu on mobile",
+      "modal_style": "minimal high-contrast overlay with editorial typography and simple close icon",
+      "list_style": "condensed post lists, ticker rows, author lists, timeline feed, and refined category blocks",
+      "component_notes": "system supports post masonry, deck scroll, bento grids, four-column mosaic, cinematic strip, card flip, category carousel, FAQ accordion, weather metric, login, newsletter, author profiles, and up-next strip"
+    }
+  },
+  "design_style": {
+    "aesthetic": {
+      "mood": ["editorial", "sovereign", "cinematic", "refined", "urgent"],
+      "visual_metaphor": "a luxury newspaper or magazine cover pinned beside a live digital article feed",
+      "era_influence": "contemporary digital publishing with print magazine, brutalist, and high-fashion editorial references",
+      "genre": "luxury editorial news and magazine theme",
+      "personality_traits": ["confident", "curated", "authoritative", "modular", "dramatic"],
+      "adjectives": ["split-screen", "brutalist", "refined", "responsive", "media-rich", "high-contrast"]
+    },
+    "visual_language": {
+      "complexity": "rich",
+      "ornamentation": "functional editorial ornamentation through rules, labels, ticker motion, cover effects, and typographic contrast",
+      "whitespace_usage": "controlled whitespace: broad around feature stories, tighter inside feeds and utility modules",
+      "visual_weight_distribution": "heavy left cover or hero image balanced by dense right-side editorial modules",
+      "focal_strategy": "persistent feature cover plus distributed interest across story cards and tickers",
+      "contrast_level": "high",
+      "texture_usage": "photo grain, grayscale imagery, paper-like warmth, and occasional glass/archive surface effects"
+    },
+    "composition": {
+      "hierarchy_method": "typographic hierarchy reinforced by image scale, pane ownership, labels, and rule lines",
+      "balance_type": "asymmetric split-screen with modular grid balancing",
+      "flow_direction": "left feature anchor to right scroll feed, then vertical progression through modules",
+      "grouping_strategy": "stories grouped by category, module type, feed density, and image prominence",
+      "negative_space_role": "creates premium editorial pacing and isolates marquee stories"
+    },
+    "imagery": {
+      "photo_treatment": "large editorial photography, optional grayscale mode, cover zoom/pan, video backgrounds, and hover transforms",
+      "illustration_style": "rare; design favors photography and typographic systems over illustration",
+      "graphic_elements": "ticker strips, progress bars, category chips, thin rules, framed media, and magazine metadata",
+      "pattern_usage": "minimal; any patterning is secondary to grids, photo texture, and typographic rhythm",
+      "image_shape": "mostly rectangular, full-bleed, square-cornered, with occasional circular author/profile modules"
+    },
+    "interaction_feel": {
+      "feedback_style": "clear and editorial: category color, hover image movement, active ticker/progress feedback",
+      "hover_behavior": "image zoom, grayscale/color shift, underline reveal, card lift or flip for special modules",
+      "transition_personality": "smooth cinematic glide with occasional sharp brutalist snap",
+      "loading_style": "minimal skeleton or fade-in; emphasis on zero layout shift",
+      "microinteraction_density": "moderate"
+    },
+    "brand_voice_in_ui": {
+      "tone": "authoritative editorial",
+      "formality": "semi-formal to premium magazine",
+      "cta_style": "direct imperative with urgent news-room energy",
+      "empty_state_approach": "clean editorial placeholder with concise guidance",
+      "error_tone": "plain, restrained, and utility-first"
+    }
+  },
+  "visual_effects": {
+    "overview": {
+      "effect_intensity": "moderate",
+      "performance_tier": "lightweight to medium",
+      "fallback_strategy": "reduce advanced cover effects to static images, disable video backgrounds, preserve layout and typography",
+      "primary_technology": "CSS transitions, native JavaScript, IntersectionObserver, optional HTML5 video"
+    },
+    "background_effects": {
+      "type": "cover-panel cinematic media",
+      "description": "sticky left cover panel supports Ken Burns, cinematic pan, glitch, tilt, soft blur-in, and native MP4 video backgrounds",
+      "technology": "CSS transforms, CSS filters, native JavaScript, HTML5 video",
+      "params": {
+        "color_palette": ["#111111", "#F5F1EA", "#C5162E"],
+        "speed": "slow cinematic",
+        "density": "single dominant media layer",
+        "opacity": "0.85-1",
+        "blend_mode": "normal or multiply for grayscale editorial looks"
+      }
+    },
+    "particle_systems": {
+      "enabled": false,
+      "type": "none",
+      "description": "no particle system is indicated by the public item page",
+      "technology": "none",
+      "params": {
+        "count": "0",
+        "shape": "none",
+        "size_range": "none",
+        "movement_pattern": "none",
+        "color_behavior": "none",
+        "interaction": "none",
+        "spawn_area": "none"
+      }
+    },
+    "3d_elements": {
+      "enabled": false,
+      "type": "none",
+      "description": "no WebGL or 3D model rendering is indicated",
+      "technology": "none",
+      "params": {
+        "renderer": "none",
+        "lighting": "none",
+        "camera": "none",
+        "materials": "none",
+        "geometry": "none",
+        "post_processing": [],
+        "interaction_model": "none"
+      }
+    },
+    "shader_effects": {
+      "enabled": false,
+      "type": "none",
+      "description": "glitch and liquid gallery effects may be CSS/JS based; no custom GLSL evidence from public item page",
+      "technology": "none confirmed",
+      "params": {
+        "uniforms": {},
+        "vertex_manipulation": "none",
+        "fragment_output": "none",
+        "noise_type": "none",
+        "distortion": "none confirmed"
+      }
+    },
+    "scroll_effects": {
+      "parallax": {
+        "enabled": true,
+        "layers": "2-3",
+        "depth_range": "subtle to moderate",
+        "speed_curve": "slow background drift against normal content scroll"
+      },
+      "scroll_triggered_animations": {
+        "enabled": true,
+        "trigger_points": "module entrance, story card entrance, image reveal, stats counters, FAQ accordion",
+        "animation_type": "fade-up, clip-reveal, zoom, counter, ticker, deck-scroll",
+        "scrub_behavior": "mostly trigger-based, occasional sticky/deck scroll behavior"
+      },
+      "scroll_morphing": {
+        "enabled": true,
+        "description": "post deck scroll, up-next strip, reading progress bar, and sticky cover create scroll-dependent interface changes"
+      }
+    },
+    "text_effects": {
+      "type": "ticker and marquee",
+      "description": "breaking news ticker, kinetic marquee, text marquee variants, large serif headline scale contrast",
+      "technology": "CSS keyframes and native JavaScript",
+      "params": {
+        "split_strategy": "by-line or continuous row",
+        "animation_per_unit": "horizontal translate for ticker; fade/clip for headline reveals",
+        "stagger": "40ms-80ms for story groups",
+        "effect_style": "newsroom ticker plus cinematic editorial headline reveal"
+      }
+    },
+    "cursor_effects": {
+      "enabled": false,
+      "type": "none",
+      "description": "no custom cursor behavior is indicated",
+      "params": {
+        "shape": "none",
+        "size": "none",
+        "blend_mode": "none",
+        "trail": "none",
+        "interaction_zone": "none"
+      }
+    },
+    "image_effects": {
+      "type": "grayscale, zoom, clip reveal, tilt, flip, liquid gallery",
+      "description": "media system includes grayscale editorial mode, cinematic cover pan, hover grids, card flip animation, parallax slabs, liquid gallery, and video frame modules",
+      "technology": "CSS filters, CSS transforms, native JavaScript, optional video",
+      "params": {
+        "filter_pipeline": "grayscale(1) contrast(1.05) or normal color; optional blur-in for cover",
+        "hover_transform": "scale(1.04), translateY(-2px), tilt, or card flip depending on module",
+        "reveal_animation": "clip-path inset reveal or opacity/transform reveal",
+        "distortion_type": "liquid or glitch listed as module/effect, implementation unconfirmed"
+      }
+    },
+    "glassmorphism_neumorphism": {
+      "enabled": true,
+      "style": "glass archive and glass gallery modules",
+      "params": {
+        "blur_radius": "12px",
+        "transparency": "0.72",
+        "border_treatment": "1px rgba(255,255,255,0.28) with dark editorial fallback",
+        "shadow_type": "soft diffused",
+        "light_source_angle": "top-left"
+      }
+    },
+    "canvas_drawings": {
+      "enabled": false,
+      "type": "none",
+      "description": "no canvas drawing layer is confirmed by public item page",
+      "technology": "none",
+      "params": {
+        "draw_method": "none",
+        "animation_loop": "none",
+        "color_scheme": "none",
+        "responsiveness": "none",
+        "interaction": "none"
+      }
+    },
+    "svg_animations": {
+      "enabled": false,
+      "type": "none confirmed",
+      "description": "icons and decorative rules may use SVG, but no explicit SVG animation is described",
+      "params": {
+        "animation_method": "none confirmed",
+        "path_morphing": "none",
+        "stroke_animation": "none",
+        "filter_effects": "none"
+      }
+    },
+    "composite_notes": "The defining effect stack is not a WebGL spectacle; it is an editorial interaction system: sticky split-screen cover, scroll-fed content, ticker motion, reading progress, grayscale media, cinematic cover transforms, and dense modular story widgets. Values should be re-sampled if the protected full-screen preview becomes accessible in a logged-in browser session."
+  }
+}
