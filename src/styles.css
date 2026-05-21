@@ -514,7 +514,7 @@ svg {
   position: relative;
   display: grid;
   min-height: 92svh;
-  align-items: center;
+  align-items: end;
   overflow: hidden;
   border-top: 1px solid var(--line);
   background: var(--ink);
@@ -547,8 +547,9 @@ svg {
   display: grid;
   width: min(620px, calc(100% - 72px));
   gap: 18px;
+  align-self: end;
   margin-left: max(56px, calc((100vw - var(--page-max)) / 2 + 28px));
-  padding: clamp(28px, 4vw, 44px) 0;
+  padding: clamp(28px, 4vw, 44px) 0 clamp(70px, 9vh, 112px);
 }
 
 .community-video__copy::before,
@@ -1705,7 +1706,8 @@ svg {
 
   .community-video__copy {
     width: min(100% - 48px, 620px);
-    margin: 0 auto;
+    margin-right: auto;
+    margin-left: 24px;
   }
 
   .topic-band,
@@ -1902,7 +1904,8 @@ svg {
 
   .community-video__copy {
     width: min(100% - 40px, 520px);
-    padding: 48px 0 68px;
+    margin-left: 20px;
+    padding: 48px 0 72px;
   }
 
   .community-video h2 {
