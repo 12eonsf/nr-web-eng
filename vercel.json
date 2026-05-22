@@ -1,0 +1,20 @@
+{
+  "rewrites": [
+    {
+      "source": "/about-us/:path*",
+      "destination": "/index.html"
+    },
+    {
+      "source": "/private-policy/:path*",
+      "destination": "/index.html"
+    },
+    {
+      "source": "/privacy-policy/:path*",
+      "destination": "/index.html"
+    },
+    {
+      "source": "/terms-of-service/:path*",
+      "destination": "/index.html"
+    }
+  ]
+}

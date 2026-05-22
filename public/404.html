@@ -1,0 +1,16 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Neu-Reality</title>
+    <script>
+      (function () {
+        var location = window.location;
+        var requestedPath = location.pathname + location.search + location.hash;
+        location.replace("/?spaPath=" + encodeURIComponent(requestedPath));
+      })();
+    </script>
+  </head>
+  <body></body>
+</html>

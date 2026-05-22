@@ -449,6 +449,16 @@ function getStaticPageKey(pathname = window.location.pathname): StaticPageKey | 
   return pageRoutes[pathname] ?? pageRoutes[pathname.replace(/\/$/, "")] ?? null;
 }
 
+function restoreStaticHostPath() {
+  const params = new URLSearchParams(window.location.search);
+  const spaPath = params.get("spaPath");
+  if (!spaPath?.startsWith("/")) return;
+
+  window.history.replaceState(null, "", spaPath);
+}
+
+restoreStaticHostPath();
+
 const articleLabels = ["Cognitive Science", "AI & Medicine", "Science & Society", "Neuroethics"];
 const podcastMeta = [
   ["Ep. 32", "55 min"],
