@@ -870,7 +870,6 @@ function App() {
           title="Past Events"
           headline="Bringing minds together"
           intro="Forums and salons that connect science with culture and society."
-          linkText="View all events"
         >
           <div className="event-grid">
             {content.events.slice(0, 4).map((event) => (
