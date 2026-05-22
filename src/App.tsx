@@ -59,8 +59,15 @@ const podcastMeta = [
 ];
 
 const neuroaestheticsIntro = [
-  "Since 2016, we have continuously introduced and explored the field of neuroaesthetics through articles, podcasts, and public events. At the heart of this field lies a compelling idea: beauty may not exist solely within the artwork itself, but within the neural activity of the viewer and listener. Together with philosopher Zhu Rui from Renmin University of China, we helped bring neuroaesthetics to the broader Chinese public for the first time in a systematic way, receiving enthusiastic responses and growing attention across disciplines.",
-  "Through talks such as Why Does Art Look Like Art?, we invited audiences to reflect on the \"parallelism between the brain and art,\" while podcast episodes like Mondrian Was a Neuroscientist explored why artists can, in many ways, be seen as intuitive neuroscientists. Alongside these projects, we have consistently introduced the works and ideas of pioneering figures in neuroaesthetics, including Semir Zeki and Eric Kandel, to our readers. Over the years, an increasing number of audiences have come to appreciate the unique intersection between neuroscience and art through our work. In this special feature, we revisit and reflect on our journey through neuroaesthetics."
+  "Since 2016, we have continuously introduced and explored the field of neuroaesthetics through articles, podcasts, and public events. At the heart of this field lies a compelling idea: beauty may not exist solely within the artwork itself, but within the neural activity of the viewer and listener.",
+  "Together with philosopher Rui Zhu from Renmin University of China, we helped bring neuroaesthetics to the broader Chinese public for the first time in a systematic way, receiving enthusiastic responses and growing attention across disciplines.",
+  <>
+    Through talks such as <em>Why Does Art Look Like Art?</em>, we invited audiences to reflect on the "parallelism between
+    the brain and art," while podcast episodes like <em>Mondrian Was a Neuroscientist</em> explored why artists can, in many
+    ways, be seen as intuitive neuroscientists. Alongside these projects, we have consistently introduced the works and ideas
+    of pioneering figures in neuroaesthetics, including Semir Zeki and Eric Kandel, to our readers.
+  </>,
+  "Over the years, an increasing number of audiences have come to appreciate the unique intersection between neuroscience and art through our work. In this special feature, we revisit and reflect on our journey through neuroaesthetics."
 ] as const;
 
 const heroSlides = [
@@ -444,27 +451,18 @@ function App() {
                 <span>Featured Topic</span>
                 <h2 id="neuroaesthetics-title">Neuroaesthetics</h2>
                 <p className="topic-feature__thesis">
-                  Beauty may not exist solely within the artwork itself, but within the neural activity of the viewer and listener.
+                  Tracing how beauty comes alive in the mind.
                 </p>
               </div>
               <div className="topic-feature__field" aria-hidden="true">
                 <img src="/assets/Neuroaesthetics/Neuroaesthetics Featured.jpg" alt="" />
-                <div className="topic-feature__signal">
-                  <i />
-                  <i />
-                  <i />
-                </div>
               </div>
             </div>
 
             <div className="topic-feature__narrative">
-              <div className="topic-feature__year" aria-hidden="true">
-                <strong>2016</strong>
-                <span>Present</span>
-              </div>
               <div className="topic-feature__text">
-                {neuroaestheticsIntro.map((paragraph) => (
-                  <p key={paragraph}>{paragraph}</p>
+                {neuroaestheticsIntro.map((paragraph, index) => (
+                  <p key={index}>{paragraph}</p>
                 ))}
               </div>
             </div>
