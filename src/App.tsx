@@ -448,7 +448,7 @@ function App() {
                 </p>
               </div>
               <div className="topic-feature__field" aria-hidden="true">
-                <img src="/assets/neu-reality-vision-field.png" alt="" />
+                <img src="/assets/Neuroaesthetics/Neuroaesthetics Featured.jpg" alt="" />
                 <div className="topic-feature__signal">
                   <i />
                   <i />
