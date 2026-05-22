@@ -1651,7 +1651,7 @@ function Footer() {
       <div className="footer-links">
         <h2>Links</h2>
         <nav aria-label="Footer navigation">
-          <a href="/">Main Site</a>
+          <a href="https://www.neu-reality.com/">Chinese Site</a>
           <a href="/about-us/">About Us</a>
           <a href="/private-policy/">Privacy Policy</a>
           <a href="/terms-of-service/">Terms of Service</a>
