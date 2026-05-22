@@ -459,7 +459,16 @@ function restoreStaticHostPath() {
 
 restoreStaticHostPath();
 
-const articleLabels = ["Cognitive Science", "AI & Medicine", "Science & Society", "Neuroethics"];
+const articleLabels = [
+  "Neuroscience",
+  "Philosophy",
+  "Computation",
+  "Cognitive Science",
+  "Philosophy of Science",
+  "Cognitive Science",
+  "Philosophy of Mind",
+  "Artificial Intelligence"
+];
 const podcastMeta = [
   ["Ep. 32", "55 min"],
   ["Ep. 28", "1 hr 13 min"],
@@ -506,6 +515,10 @@ const neuroaestheticsEventLinks = [
   "https://www.bilibili.com/video/BV1Yf4y1P7An",
   "https://www.bilibili.com/video/BV1Xg411P7zY"
 ] as const;
+
+const newsletterLatestTitle =
+  "🫀 Your Living Environment at 20 May Shape Your Heart in Midlife. ⚙️ A Simple Trick for Maintaining Working Memory. 🧠 Could Fish Oil Actually Harm the Brain?";
+const newsletterLatestLink = "https://neu-reality.com/2026/04/newsletter-034/";
 
 const heroSlides = [
   {
@@ -1062,6 +1075,46 @@ function App() {
                   })}
                 </ol>
               </section>
+            </div>
+          </div>
+        </section>
+
+        <section className="newsletter-section section-anchor" id="newsletter" aria-labelledby="newsletter-title">
+          <div className="editorial-section__inner newsletter-section__inner">
+            <aside className="section-aside">
+              <span>Newsletter</span>
+              <h2 id="newsletter-title">Insights, delivered</h2>
+              <p>
+                Across recurring columns, we explore the frontiers of neuroscience, psychiatry,
+                artificial intelligence, and life science.
+              </p>
+              <a className="newsletter-cta" href={newsletterLatestLink} target="_blank" rel="noreferrer">
+                <span
+                  className="newsletter-cta__marquee"
+                  aria-label="Get the latest research, industry insights, and health perspectives in your inbox"
+                >
+                  <span>
+                    Get the latest research, industry insights, and health perspectives in your inbox
+                    <span aria-hidden="true">•</span>
+                    Get the latest research, industry insights, and health perspectives in your inbox
+                  </span>
+                </span>
+                <i className="bi bi-arrow-right-short" aria-hidden="true" />
+              </a>
+            </aside>
+
+            <div className="newsletter-section__content">
+              <article className="newsletter-latest">
+                <span>
+                  <i className="bi bi-newspaper" aria-hidden="true" />
+                  Latest Issue
+                </span>
+                <h3>
+                  <a href={newsletterLatestLink} target="_blank" rel="noreferrer">
+                    {newsletterLatestTitle}
+                  </a>
+                </h3>
+              </article>
             </div>
           </div>
         </section>

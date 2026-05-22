@@ -668,6 +668,17 @@ svg {
   max-width: 8.5ch;
 }
 
+#podcasts .section-aside h2 {
+  max-width: 100%;
+  font-size: clamp(1.58rem, 2.48vw, 2.28rem);
+  line-height: 1.02;
+}
+
+#newsletter .section-aside h2 {
+  max-width: 9.5ch;
+  font-size: clamp(1.62rem, 2.4vw, 2.8rem);
+}
+
 .section-aside p {
   max-width: 195px;
   margin: 0;
@@ -1732,6 +1743,162 @@ svg {
   color: var(--ink-soft);
   font-size: 0.78rem;
   line-height: 1.45;
+}
+
+.newsletter-section {
+  background: linear-gradient(90deg, var(--surface), var(--paper));
+}
+
+.newsletter-section__inner {
+  align-items: start;
+}
+
+.newsletter-section__content {
+  display: grid;
+  min-width: 0;
+  gap: clamp(18px, 2.2vw, 30px);
+}
+
+.newsletter-latest {
+  display: grid;
+  gap: clamp(14px, 1.8vw, 22px);
+}
+
+.newsletter-latest > span {
+  display: inline-flex;
+  width: max-content;
+  align-items: center;
+  gap: 8px;
+  color: var(--muted);
+  font-size: 0.58rem;
+  font-weight: 800;
+  letter-spacing: 0.1em;
+  line-height: 1.2;
+  text-transform: uppercase;
+}
+
+.newsletter-latest > span i {
+  font-size: 0.82rem;
+  line-height: 1;
+}
+
+.newsletter-cta {
+  display: inline-flex;
+  width: min(100%, 260px);
+  max-width: 100%;
+  min-height: 36px;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  padding: 7px 8px 7px 14px;
+  border: 1px solid rgba(255, 253, 248, 0.16);
+  border-radius: 999px;
+  background: rgba(2, 4, 3, 0.86);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.14),
+    0 14px 30px rgba(2, 4, 3, 0.12);
+  color: var(--surface);
+  font-size: 0.66rem;
+  font-weight: 800;
+  letter-spacing: 0.02em;
+  line-height: 1.25;
+  backdrop-filter: blur(14px) saturate(1.25);
+  transition:
+    border-color 180ms var(--ease),
+    background 180ms var(--ease),
+    box-shadow 180ms var(--ease),
+    transform 180ms var(--ease);
+}
+
+.newsletter-cta i:last-child {
+  display: grid;
+  width: 24px;
+  height: 24px;
+  flex: 0 0 auto;
+  place-items: center;
+  border-radius: 50%;
+  background: #01ffa3;
+  color: var(--ink);
+  font-size: 1rem;
+  line-height: 1;
+  transform: translateX(0);
+  transition: transform 180ms var(--ease);
+}
+
+.newsletter-cta:hover,
+.newsletter-cta:focus-visible {
+  border-color: rgba(1, 255, 163, 0.42);
+  background: rgba(2, 4, 3, 0.92);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.18),
+    0 16px 32px rgba(2, 4, 3, 0.16);
+  transform: translateY(-1px);
+}
+
+.newsletter-cta:hover i:last-child,
+.newsletter-cta:focus-visible i:last-child {
+  transform: translateX(2px);
+}
+
+.newsletter-cta__marquee {
+  display: block;
+  min-width: 0;
+  overflow: hidden;
+  white-space: nowrap;
+  mask-image: linear-gradient(90deg, transparent, #000 14%, #000 86%, transparent);
+}
+
+.newsletter-cta__marquee > span {
+  display: inline-flex;
+  gap: 10px;
+  align-items: center;
+  width: max-content;
+  animation: newsletter-marquee 9s linear infinite;
+}
+
+.newsletter-cta__marquee span[aria-hidden="true"] {
+  color: #01ffa3;
+}
+
+.newsletter-cta:hover .newsletter-cta__marquee > span,
+.newsletter-cta:focus-visible .newsletter-cta__marquee > span {
+  animation-play-state: paused;
+}
+
+@keyframes newsletter-marquee {
+  from {
+    transform: translateX(0);
+  }
+
+  to {
+    transform: translateX(calc(-50% - 5px));
+  }
+}
+
+.newsletter-latest h3 {
+  max-width: 20ch;
+  margin: 0;
+  color: var(--ink);
+  font-family: var(--serif);
+  font-size: clamp(1.56rem, 3.35vw, 3.65rem);
+  font-weight: 600;
+  letter-spacing: 0;
+  line-height: 1.04;
+}
+
+.newsletter-latest h3 a {
+  color: inherit;
+  text-decoration: none;
+  transition: color 180ms var(--ease);
+}
+
+.newsletter-latest h3 a:hover,
+.newsletter-latest h3 a:focus-visible {
+  color: inherit;
+  text-decoration: underline;
+  text-decoration-color: #01ffa3;
+  text-decoration-thickness: 0.05em;
+  text-underline-offset: 0.12em;
 }
 
 .partners {
@@ -2960,6 +3127,21 @@ svg {
   .static-copy-section li {
     font-size: 0.92rem;
     line-height: 1.68;
+  }
+
+  .newsletter-latest h3 {
+    max-width: 100%;
+    font-size: clamp(1.42rem, 6.9vw, 2.12rem);
+    line-height: 1.02;
+  }
+
+  .newsletter-cta {
+    display: flex;
+    grid-column: 1 / -1;
+    width: 100%;
+    min-height: 44px;
+    justify-self: stretch;
+    padding: 8px 9px 8px 15px;
   }
 
   .article-grid,
