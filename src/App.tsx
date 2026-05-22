@@ -24,7 +24,7 @@ import {
 import { useEffect, useMemo, useState } from "react";
 import { defaultContent, SiteContent } from "./content";
 
-const STORAGE_KEY = "neu-reality-content-v10";
+const STORAGE_KEY = "neu-reality-content-v11";
 const HERO_IMAGE = "/assets/hero-illustration.jpg";
 const LOGO_IMAGE = "/assets/neu-reality-logo-white.png";
 const COMMUNITY_VIDEO = "/assets/BG Video.mp4";
@@ -478,9 +478,14 @@ function App() {
                 <ol className="topic-article-grid">
                   {neuroaestheticsArticles.map((item, index) => (
                     <li className="topic-article" key={item.title}>
-                      <span>{String(index + 1).padStart(2, "0")}</span>
-                      <h3>{item.title}</h3>
-                      <p>By {item.author || "Neu-Reality"}</p>
+                      <div className="topic-article__cover">
+                        {item.cover ? <img src={item.cover} alt="" /> : <Camera aria-hidden="true" />}
+                      </div>
+                      <div className="topic-article__body">
+                        <span>{String(index + 1).padStart(2, "0")}</span>
+                        <h3>{item.title}</h3>
+                        <p>By {item.author || "Neu-Reality"}</p>
+                      </div>
                     </li>
                   ))}
                 </ol>

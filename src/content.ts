@@ -366,56 +366,56 @@ export const defaultContent: SiteContent = {
   neuroaesthetics: [
     {
       kind: "Article",
-      cover: "",
+      cover: "/assets/Neuroaesthetics/article 1.png",
       title: "Beauty Exists Within the Viewer's Nervous System",
       intro: "",
       author: "Neu-Reality"
     },
     {
       kind: "Article",
-      cover: "",
+      cover: "/assets/Neuroaesthetics/article 2.png",
       title: "Will Neuroscience Constrain Art Appreciation?",
       intro: "",
       author: "Neu-Reality"
     },
     {
       kind: "Article",
-      cover: "",
+      cover: "/assets/Neuroaesthetics/article 3.jpg",
       title: "Where Does the Beauty of Art Truly Reside?",
       intro: "",
       author: "Neu-Reality"
     },
     {
       kind: "Article",
-      cover: "",
+      cover: "/assets/Neuroaesthetics/article 4.png",
       title: "Neuroaesthetics: The Chemical Reactions Between Brain and Art",
       intro: "",
       author: "Neu-Reality"
     },
     {
       kind: "Article",
-      cover: "",
+      cover: "/assets/Neuroaesthetics/article 5.png",
       title: "Returning to Vienna: Understanding Brain and Art with a Nobel Laureate",
       intro: "",
       author: "Neu-Reality"
     },
     {
       kind: "Article",
-      cover: "",
+      cover: "/assets/Neuroaesthetics/article 6.png",
       title: "The Pleasure of Art: A Game of Perception and Creation",
       intro: "",
       author: "Neu-Reality"
     },
     {
       kind: "Article",
-      cover: "",
+      cover: "/assets/Neuroaesthetics/article 7.png",
       title: "Beauty That Overwhelms: The Mystery of Stendhal Syndrome",
       intro: "",
       author: "Neu-Reality"
     },
     {
       kind: "Article",
-      cover: "",
+      cover: "/assets/Neuroaesthetics/article 8.png",
       title: "Is Art a Human Monopoly?",
       intro: "",
       author: "Neu-Reality"
