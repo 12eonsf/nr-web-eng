@@ -29,7 +29,10 @@ export type EventItem = {
 export type Course = {
   cover: string;
   theme: string;
-  mentor: string;
+  mentor?: string;
+  mentorAvatar?: string;
+  mentorName: string;
+  mentorTitle: string;
   intro: string;
   type: "Course" | "Workshop";
   location: string;
@@ -261,8 +264,10 @@ export const defaultContent: SiteContent = {
   courses: [
     {
       cover: "/assets/Does the Brain Flip Coins.png",
-      theme: "The Neuroscience of Decision-making",
-      mentor: "Associate Professor at Dartmouth College",
+      theme: "The Neuroscience of Decision-Making",
+      mentorAvatar: "/assets/falculty/alireza-soltani.jpg",
+      mentorName: "Alireza Soltani",
+      mentorTitle: "Associate Professor at Dartmouth College",
       intro:
         "A course on neural computation, choice behavior, and the mechanisms that shape decisions.",
       type: "Course",
@@ -271,7 +276,9 @@ export const defaultContent: SiteContent = {
     {
       cover: "/assets/Time and Consciousness in the Images of Life.jpg",
       theme: "The Neuroscience of Memory",
-      mentor: "Lila Davachi, Professor of Psychology at Columbia University",
+      mentorAvatar: "/assets/falculty/Lila-Davachi.png",
+      mentorName: "Lila Davachi",
+      mentorTitle: "Professor of Psychology at Columbia University",
       intro:
         "A course on memory systems, learning, and how experience is transformed into durable knowledge.",
       type: "Course",
@@ -280,7 +287,9 @@ export const defaultContent: SiteContent = {
     {
       cover: "/assets/London Brain and Intelligence Summit.png",
       theme: "How We Adapt Our Thinking and Behavior to Goals",
-      mentor: "Faculty from University of Cambridge",
+      mentorAvatar: "",
+      mentorName: "Cambridge Faculty",
+      mentorTitle: "Faculty from University of Cambridge",
       intro:
         "A Cambridge-based course on cognitive flexibility, goal-directed behavior, and adaptive thought.",
       type: "Course",
@@ -289,7 +298,9 @@ export const defaultContent: SiteContent = {
     {
       cover: "/assets/“Democratic” Neural Networks.png",
       theme: "Cognitive Algorithms and Neural Mechanisms of Economic Games",
-      mentor: "Faculty from University College London",
+      mentorAvatar: "",
+      mentorName: "UCL Faculty",
+      mentorTitle: "Faculty from University College London",
       intro:
         "A London course exploring economic games, decision models, and the neural mechanisms of social exchange.",
       type: "Course",
@@ -298,7 +309,9 @@ export const defaultContent: SiteContent = {
     {
       cover: "/assets/AI Has Bias Too.png",
       theme: "Understanding Intelligent Agents",
-      mentor: "Faculty from Imperial College London",
+      mentorAvatar: "",
+      mentorName: "Imperial Faculty",
+      mentorTitle: "Faculty from Imperial College London",
       intro:
         "A workshop on intelligent agents, agency, and the conceptual foundations of current AI systems.",
       type: "Workshop",

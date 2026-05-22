@@ -1,7 +1,6 @@
 import {
   ArrowRight,
   Camera,
-  GraduationCap,
   Headphones,
   Instagram,
   Linkedin,
@@ -125,7 +124,9 @@ const adminSections: { key: SectionKey; label: string; fields: FieldConfig[] }[]
     fields: [
       { key: "cover", label: "Cover", kind: "media" },
       { key: "theme", label: "Course Theme" },
-      { key: "mentor", label: "Mentor" },
+      { key: "mentorAvatar", label: "Mentor Avatar", kind: "media" },
+      { key: "mentorName", label: "Mentor Name" },
+      { key: "mentorTitle", label: "Mentor Title" },
       { key: "intro", label: "Course Intro", kind: "textarea" },
       { key: "type", label: "Type", kind: "select", options: ["Course", "Workshop"] },
       { key: "location", label: "Location / Online" }
@@ -320,11 +321,11 @@ function App() {
 
         <EditorialSection
           id="podcasts"
-          kicker="Neuromancing"
+          kicker="Neuromancing · Podcast"
           title="Neuromancing"
           headline="The unknown mind"
-          intro="Long-form conversations with scientists, physicians, and philosophers."
-          linkText="View all episodes"
+          intro="Wandering through the landscapes of neuroscience and cognitive science, uncovering the hidden mechanisms and subtle fascinations beneath cognition and perception."
+          asideExtra={<PodcastListenLinks />}
         >
           <div className="podcast-strip">
             {content.podcasts.map((podcast, index) => (
@@ -393,16 +394,17 @@ function App() {
           <div className="course-grid">
             {content.courses.slice(0, 4).map((course) => (
               <article className="content-card course-card" key={course.theme}>
-                <Cover src={course.cover} alt="" />
+                <div className="course-card__media">
+                  <Cover src={course.cover} alt="" />
+                  <span className="course-card__location">{course.location}</span>
+                </div>
                 <div className="content-card__body">
                   <span>{course.type}</span>
                   <h3>{course.theme}</h3>
-                  <small>Mentor<br />{course.mentor}</small>
-                  <small>{course.location}</small>
+                  <CourseMentor course={course} />
                 </div>
               </article>
             ))}
-            <CalloutCard icon={<GraduationCap />} title="Mentored programs for curious minds and future leaders." link="Explore academy" />
           </div>
         </EditorialSection>
 
@@ -516,6 +518,13 @@ function Header() {
             {label}
           </a>
         ))}
+        <div className="language-switch" aria-label="Language">
+          <span aria-current="true">EN</span>
+          <span aria-hidden="true">|</span>
+          <a href="https://neu-reality.com/" onClick={() => setIsMenuOpen(false)}>
+            CN
+          </a>
+        </div>
       </nav>
     </header>
   );
@@ -527,6 +536,7 @@ function EditorialSection({
   headline,
   intro,
   linkText,
+  asideExtra,
   children
 }: {
   id: string;
@@ -534,7 +544,8 @@ function EditorialSection({
   title: string;
   headline: string;
   intro: string;
-  linkText: string;
+  linkText?: string;
+  asideExtra?: React.ReactNode;
   children: React.ReactNode;
 }) {
   return (
@@ -544,14 +555,38 @@ function EditorialSection({
           <span>{kicker}</span>
           <h2>{headline}</h2>
           <p>{intro}</p>
-          <a className="section-link" href={`#${id}`}>
-            {linkText}
-            <ArrowRight size={16} />
-          </a>
+          {asideExtra ? <div className="section-aside__extra">{asideExtra}</div> : null}
+          {linkText ? (
+            <a className="section-link" href={`#${id}`}>
+              {linkText}
+              <ArrowRight size={16} />
+            </a>
+          ) : null}
         </aside>
         <div className="editorial-section__content">{children}</div>
       </div>
     </section>
+  );
+}
+
+function PodcastListenLinks() {
+  const platforms = [
+    { label: "Spotify", logo: "/assets/podcast/spotify-card.svg" },
+    { label: "Apple Podcasts", logo: "/assets/podcast/apple-podcasts-card.svg" },
+    { label: "喜马拉雅", logo: "/assets/podcast/ximalaya-card.svg" }
+  ];
+
+  return (
+    <div className="podcast-listen" aria-label="Podcast platforms">
+      <small>Listen on</small>
+      <div className="podcast-platforms">
+        {platforms.map((platform) => (
+          <span aria-label={platform.label} key={platform.label} title={platform.label}>
+            <img src={platform.logo} alt="" />
+          </span>
+        ))}
+      </div>
+    </div>
   );
 }
 
@@ -572,6 +607,40 @@ function Cover({ src, alt }: { src: string; alt: string }) {
   return (
     <div className="cover">
       {src ? <img src={src} alt={alt} /> : <Camera aria-hidden="true" />}
+    </div>
+  );
+}
+
+function CourseMentor({ course }: { course: SiteContent["courses"][number] }) {
+  const legacyMentor = course.mentor?.trim() ?? "";
+  const legacyParts = legacyMentor.split(",").map((part) => part.trim()).filter(Boolean);
+  const hasLegacyName = legacyParts.length > 1;
+  const name = course.mentorName || (hasLegacyName ? legacyParts[0] : "Faculty Mentor");
+  const title =
+    course.mentorTitle ||
+    (hasLegacyName ? legacyParts.slice(1).join(", ") : legacyMentor) ||
+    "Noetex Academy Mentor";
+  const initials = name
+    .split(/\s+/)
+    .filter(Boolean)
+    .slice(0, 2)
+    .map((part) => part[0])
+    .join("")
+    .toUpperCase();
+
+  return (
+    <div className="course-mentor">
+      <div className="course-mentor__avatar">
+        {course.mentorAvatar ? (
+          <img src={course.mentorAvatar} alt={`${name} avatar`} />
+        ) : (
+          <span aria-hidden="true">{initials}</span>
+        )}
+      </div>
+      <div className="course-mentor__copy">
+        <strong>{name}</strong>
+        <small>{title}</small>
+      </div>
     </div>
   );
 }
