@@ -73,8 +73,7 @@ const footerSocialLinks: PlatformLink[] = [
   { label: "X", url: "https://twitter.com/Neureality_mag" },
   { label: "Instagram", url: "https://www.instagram.com/neu_reality/" },
   { label: "TikTok", url: "https://www.tiktok.com/@neureality?_t=8j9zFdCx3WC&_r=1" },
-  { label: "Bluesky", url: "https://bsky.app/profile/neureality.bsky.social" },
-  { label: "RSS", url: "https://neu-reality.com/rss" }
+  { label: "Bluesky", url: "https://bsky.app/profile/neureality.bsky.social" }
 ];
 
 const staticPages: Record<StaticPageKey, StaticPageContent> = {
@@ -86,7 +85,7 @@ const staticPages: Record<StaticPageKey, StaticPageContent> = {
       "Neu-Reality is an independent science communication platform focused on neuroscience, intelligence, frontier technology, and the changing relationship between research and society.",
     highlights: [
       ["2016", "founded"],
-      ["700K+", "subscribers across platforms"],
+      ["1M+", "subscribers across platforms"],
       ["400", "contributors and volunteers"],
       ["10M+", "annual reads"]
     ],
@@ -1703,11 +1702,9 @@ function socialIcon(label: string) {
       ? "bi-tiktok"
       : lower.includes("bluesky")
         ? "bi-bluesky"
-        : lower.includes("rss")
-          ? "bi-rss"
-          : lower === "x" || lower.includes("twitter")
-            ? "bi-twitter-x"
-            : "bi-link-45deg";
+        : lower === "x" || lower.includes("twitter")
+          ? "bi-twitter-x"
+          : "bi-link-45deg";
 
   return <i className={`bi ${iconClass}`} aria-hidden="true" />;
 }

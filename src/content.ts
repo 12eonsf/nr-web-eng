@@ -573,7 +573,6 @@ export const defaultContent: SiteContent = {
     { label: "X", url: "https://twitter.com/Neureality_mag" },
     { label: "Instagram", url: "https://www.instagram.com/neu_reality/" },
     { label: "TikTok", url: "https://www.tiktok.com/@neureality?_t=8j9zFdCx3WC&_r=1" },
-    { label: "Bluesky", url: "https://bsky.app/profile/neureality.bsky.social" },
-    { label: "RSS", url: "https://neu-reality.com/rss" }
+    { label: "Bluesky", url: "https://bsky.app/profile/neureality.bsky.social" }
   ]
 };
