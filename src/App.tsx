@@ -4,8 +4,6 @@ import {
   CalendarDays,
   Clock3,
   Headphones,
-  Instagram,
-  Linkedin,
   Mail,
   MapPin,
   Menu,
@@ -19,10 +17,9 @@ import {
   Users,
   Video,
   X,
-  Youtube
 } from "lucide-react";
 import { useEffect, useMemo, useState } from "react";
-import { defaultContent, SiteContent } from "./content";
+import { defaultContent, PlatformLink, SiteContent } from "./content";
 
 const STORAGE_KEY = "neu-reality-content-v11";
 const HERO_IMAGE = "/assets/hero-illustration.jpg";
@@ -30,6 +27,30 @@ const LOGO_IMAGE = "/assets/neu-reality-logo-white.png";
 const COMMUNITY_VIDEO = "/assets/BG Video.mp4";
 
 type SectionKey = keyof SiteContent;
+type StaticPageKey = "about" | "privacy" | "terms";
+
+type PageSubsection = {
+  heading: string;
+  paragraphs?: string[];
+  bullets?: string[];
+};
+
+type PageSection = {
+  id: string;
+  heading: string;
+  paragraphs?: string[];
+  bullets?: string[];
+  subsections?: PageSubsection[];
+};
+
+type StaticPageContent = {
+  key: StaticPageKey;
+  eyebrow: string;
+  title: string;
+  deck: string;
+  highlights?: [string, string][];
+  sections: PageSection[];
+};
 
 type FieldConfig = {
   key: string;
@@ -48,6 +69,387 @@ const navItems = [
   ["Partners", "partners"]
 ] as const;
 
+const footerSocialLinks: PlatformLink[] = [
+  { label: "X", url: "https://twitter.com/Neureality_mag" },
+  { label: "Instagram", url: "https://www.instagram.com/neu_reality/" },
+  { label: "TikTok", url: "https://www.tiktok.com/@neureality?_t=8j9zFdCx3WC&_r=1" },
+  { label: "Bluesky", url: "https://bsky.app/profile/neureality.bsky.social" },
+  { label: "RSS", url: "https://neu-reality.com/rss" }
+];
+
+const staticPages: Record<StaticPageKey, StaticPageContent> = {
+  about: {
+    key: "about",
+    eyebrow: "About Us",
+    title: "About Us",
+    deck:
+      "Neu-Reality is an independent science communication platform focused on neuroscience, intelligence, frontier technology, and the changing relationship between research and society.",
+    highlights: [
+      ["2016", "founded"],
+      ["700K+", "subscribers across platforms"],
+      ["400", "contributors and volunteers"],
+      ["10M+", "annual reads"]
+    ],
+    sections: [
+      {
+        id: "mission",
+        heading: "Our Mission",
+        paragraphs: [
+          "Neu-Reality follows scientific breakthroughs, technology transfer, clinical applications, and commercial trends in fields related to the brain and intelligence. We also work to make science more understandable and participatory for the public, while encouraging interdisciplinary exchange across research communities.",
+          "After years of sustained work, Neu-Reality has become one of China's leading independent science media platforms in frontier technology. The platform has been recognized by organizations including Huxiu and The Intellectual, and was named a 2020 Author of the Year by Huxiu."
+        ]
+      },
+      {
+        id: "community",
+        heading: "A Global Contributor Network",
+        paragraphs: [
+          "Our volunteer and contributor community includes nearly 400 members from leading universities and institutions in China and around the world, including Peking University, Tsinghua University, Beijing Normal University, Fudan University, Shanghai Jiao Tong University, Zhejiang University, the Institute of Neuroscience at the Chinese Academy of Sciences, the University of Cambridge, the University of Oxford, University College London, Stanford University, the Max Planck Institutes, MIT, the University of California system, and Princeton University.",
+          "These contributors work across scientific research, journalism, education, technology, and cultural communication. Their expertise helps keep Neu-Reality's reporting, interpretation, and public programs grounded in specialist knowledge."
+        ]
+      },
+      {
+        id: "public-programs",
+        heading: "Public Programs",
+        paragraphs: [
+          "In Beijing and Shanghai, Neu-Reality has hosted six Mind+ public talks, inviting scientists to explain how the brain works through topics such as autism and schizophrenia, decision-making, and neuroaesthetics. Livestreams and replays of these events have reached nearly 500,000 viewers.",
+          "In October 2019, Neu-Reality partnered with Beijing 706 Youth Space to co-host Mental Health Month, presenting 20 talks, experiential activities, and themed gatherings on psychology and mental health."
+        ]
+      },
+      {
+        id: "projects",
+        heading: "New Projects",
+        paragraphs: [
+          "We continue to explore new formats, including podcasts, newsletters, illustration, video, and forums. In Neuromancing, our podcast, we dive with guests from different fields into the unknown territories of human thought, examining the brain through science, medicine, technology, and philosophy.",
+          "On Ximalaya, the podcast has received more than one million plays. Our research-focused publication, NeuroFrontier, shares research interpretation, academic skills, and weekly paper briefings for scholars. NeuS, a Neu-Reality business and technology service platform, tracks research progress, application translation, policy movement, and investment trends across brain science industries."
+        ]
+      },
+      {
+        id: "collaboration",
+        heading: "Collaboration",
+        paragraphs: [
+          "Alongside science communication, Neu-Reality has collaborated with publishers, research institutes, technology and education companies, and art organizations. We have helped translate and write books, produced a brain science special issue with CITIC Press, and supported academic publishing projects including Cognitive Science.",
+          "We have also built deep collaboration with the Philosophy and Cognitive Science Interdisciplinary Platform at Renmin University of China, jointly organizing academic exchange programs such as the international conference on predictive processing, adaptive orientation, and causal reasoning."
+        ]
+      },
+      {
+        id: "name",
+        heading: "What Neu-Reality Means",
+        paragraphs: [
+          "The name Neu-Reality carries two meanings: our reality is represented by neural activity, and neuroscience and neurotechnology may lead us toward new realities in the future.",
+          "We believe the brain remains one of the last frontiers of human knowledge. Neu-Reality exists to witness, explain, and connect the major steps along that path.",
+          "Contact: support@neu-reality.com"
+        ]
+      }
+    ]
+  },
+  privacy: {
+    key: "privacy",
+    eyebrow: "Privacy Policy",
+    title: "Privacy Policy",
+    deck:
+      "This policy explains how Neu-Reality collects, uses, stores, shares, and protects personal information when you visit or use our website.",
+    sections: [
+      {
+        id: "collection",
+        heading: "1. Information We Collect",
+        paragraphs: ["We may collect information in the following ways:"],
+        bullets: [
+          "Information you provide directly, such as your name, email address, phone number, mailing address, payment information, or other details submitted when you register, place an order, complete a form, or contact us.",
+          "Information collected automatically, such as device information, browser type, IP address, visit time, and browsing activity through cookies, log files, and similar technologies.",
+          "Information from third parties or partners, such as social media platforms, when you have authorized that third party to share information with us."
+        ]
+      },
+      {
+        id: "use",
+        heading: "2. How We Use Information",
+        paragraphs: ["The information we collect may be used to:"],
+        bullets: [
+          "Provide, maintain, and improve our services.",
+          "Process and manage orders, payments, and deliveries.",
+          "Send account notifications, order confirmations, or promotional messages.",
+          "Improve customer service and user experience.",
+          "Prevent fraud and other illegal activities.",
+          "Comply with legal and regulatory requirements."
+        ]
+      },
+      {
+        id: "cookies",
+        heading: "3. Cookies and Tracking Technologies",
+        paragraphs: [
+          "To improve the user experience, we may use cookies and similar tracking technologies to understand activity on our website. Cookies help us remember preferences and provide personalized content and advertising. You may disable cookies in your browser settings, but doing so may affect some website functions."
+        ]
+      },
+      {
+        id: "sharing",
+        heading: "4. Information Sharing",
+        paragraphs: ["We do not sell or rent your personal information to third parties. We only share information in the following circumstances:"],
+        bullets: [
+          "Service providers: to provide services, we may share information with trusted third-party service providers such as payment processors or logistics partners.",
+          "Legal compliance: when necessary, we may disclose information according to laws, regulations, or government requirements.",
+          "Business transfers: if our business is involved in a merger, acquisition, or asset sale, your information may be transferred as part of the business assets."
+        ]
+      },
+      {
+        id: "protection",
+        heading: "5. Information Protection",
+        paragraphs: [
+          "We take reasonable technical and organizational measures to protect personal information from unauthorized access, disclosure, alteration, or destruction. Although we work to protect your information, internet transmission is not completely secure, and we cannot guarantee absolute security for data transmitted to us."
+        ]
+      },
+      {
+        id: "rights",
+        heading: "6. Your Rights",
+        paragraphs: ["You have the following rights regarding your personal information:"],
+        bullets: [
+          "Access: you may request access to the personal information we store about you.",
+          "Correction: you may request correction if your personal information is inaccurate.",
+          "Deletion: in certain circumstances, you may request that we delete your personal information.",
+          "Marketing opt-out: you may unsubscribe from marketing emails at any time by clicking the unsubscribe link in an email or by contacting us."
+        ]
+      },
+      {
+        id: "third-party-links",
+        heading: "7. Third-Party Links",
+        paragraphs: [
+          "Our website may contain links to third-party websites. Those websites have their own privacy policies, and we are not responsible for their content or activities."
+        ]
+      },
+      {
+        id: "changes",
+        heading: "8. Changes to This Policy",
+        paragraphs: [
+          "We may update this privacy policy from time to time. When updates are made, we will post the revised date on this page. We recommend reviewing this policy periodically for the latest information."
+        ]
+      },
+      {
+        id: "contact",
+        heading: "9. Contact Us",
+        paragraphs: [
+          "If you have questions about this privacy policy or wish to exercise your rights, please contact us at support@neu-reality.com."
+        ]
+      }
+    ]
+  },
+  terms: {
+    key: "terms",
+    eyebrow: "Terms of Service",
+    title: "Terms of Service",
+    deck:
+      "These terms govern your access to and use of the Neu-Reality website and services operated by Shanghai Naoshang Media Technology Co., Ltd.",
+    sections: [
+      {
+        id: "intro",
+        heading: "Introduction",
+        paragraphs: [
+          "Welcome to the Neu-Reality website. This website is operated and managed by Shanghai Naoshang Media Technology Co., Ltd. By using this website and its services, you should carefully read and agree to these terms. If you do not agree to any part of this agreement, please stop using the website."
+        ]
+      },
+      {
+        id: "services",
+        heading: "Article 1. Services",
+        subsections: [
+          {
+            heading: "Paid Content",
+            paragraphs: [
+              "The website provides users with high-quality content, including but not limited to articles, videos, and online courses. Some content is available only to paid users or subscribers."
+            ]
+          },
+          {
+            heading: "Event Notifications",
+            paragraphs: [
+              "The website provides registered users with event notifications and registration services related to neuroscience, psychology, and related fields."
+            ]
+          },
+          {
+            heading: "Copyright Notice",
+            paragraphs: [
+              "Unless otherwise stated, website content, including text, images, audio, and video, is copyrighted by Shanghai Naoshang Media Technology Co., Ltd. Without written authorization, no person may copy, distribute, republish, adapt, or use the content for commercial purposes in any form."
+            ]
+          }
+        ]
+      },
+      {
+        id: "accounts",
+        heading: "Article 2. Registration and Account Management",
+        subsections: [
+          {
+            heading: "Registration Requirements",
+            paragraphs: [
+              "When registering, you must provide true and complete personal information, including but not limited to username, contact details, and WeChat account information. You are responsible for any consequences arising from false information."
+            ]
+          },
+          {
+            heading: "Account Security",
+            paragraphs: [
+              "Users must properly safeguard account credentials and passwords and must not disclose account information to others. Users are responsible for losses caused by improper account management."
+            ]
+          },
+          {
+            heading: "Account Restrictions",
+            paragraphs: ["Users must not use website accounts to engage in the following conduct:"],
+            bullets: [
+              "Publishing illegal, non-compliant, or inappropriate content.",
+              "Infringing others' privacy, intellectual property, or other lawful rights.",
+              "Commercializing website content without authorization."
+            ]
+          }
+        ]
+      },
+      {
+        id: "conduct",
+        heading: "Article 3. User Conduct",
+        subsections: [
+          {
+            heading: "Prohibited Content",
+            paragraphs: ["Users must not upload or distribute any of the following content on the website:"],
+            bullets: [
+              "Content that violates Chinese laws or regulations.",
+              "Content containing malicious code or content that disrupts website functions.",
+              "Content that harms the interests of the website or third parties."
+            ]
+          },
+          {
+            heading: "Lawful Use",
+            paragraphs: [
+              "Users agree to use the website and its services lawfully in accordance with this agreement and applicable laws and regulations. If user conduct causes losses to the company or any third party, the user bears full liability for compensation."
+            ]
+          }
+        ]
+      },
+      {
+        id: "paid-services",
+        heading: "Article 4. Paid Services",
+        subsections: [
+          {
+            heading: "Subscriptions and Payments",
+            paragraphs: [
+              "Users may access paid content and services by purchasing subscriptions or one-time paid services. All transaction records are subject to the records displayed by the website system."
+            ]
+          },
+          {
+            heading: "Fees and Refunds",
+            bullets: [
+              "Virtual goods: because virtual goods, including paid content, courses, and membership services, are special in nature, once purchased successfully they are not refundable. Please carefully confirm the relevant content and service terms before purchase.",
+              "Physical goods: for physical goods purchased through this website, users have the right to return goods without reason within seven days, provided that the goods remain in original packaging, unused, and undamaged; the user bears return shipping costs; and if the goods have quality issues, the website bears the return shipping costs.",
+              "Refund process: if you meet the refund conditions, please submit a refund request through the website customer service channel. We will complete the refund review within seven business days after receiving the returned goods or confirming that virtual goods cannot be used."
+            ]
+          }
+        ]
+      },
+      {
+        id: "intellectual-property",
+        heading: "Article 5. Intellectual Property",
+        subsections: [
+          {
+            heading: "Ownership",
+            paragraphs: [
+              "Unless otherwise stated, all services and content on this website, including text, images, video, audio, and code, belong to Shanghai Naoshang Media Technology Co., Ltd. and are protected by the Copyright Law of the People's Republic of China and other applicable laws."
+            ]
+          },
+          {
+            heading: "License and Restrictions",
+            bullets: [
+              "Users are authorized only to browse and use content within this website and may not redistribute it or use it commercially in any form.",
+              "If special authorization is required, please contact the website in advance and obtain written permission."
+            ]
+          }
+        ]
+      },
+      {
+        id: "privacy",
+        heading: "Article 6. Privacy Protection",
+        subsections: [
+          {
+            heading: "Information Collection",
+            paragraphs: [
+              "We collect information provided by users during registration and use, including but not limited to names, contact details, and browsing records."
+            ]
+          },
+          {
+            heading: "Information Use",
+            bullets: [
+              "Your personal information is used only as necessary to provide website services.",
+              "Except as otherwise required by laws and regulations or with explicit user authorization, we will not disclose your personal information to third parties."
+            ]
+          },
+          {
+            heading: "Information Security",
+            paragraphs: [
+              "We will take reasonable technical measures to protect user information. However, the company is not liable for information leakage caused by force majeure events such as hacking attacks."
+            ]
+          }
+        ]
+      },
+      {
+        id: "service-interruption",
+        heading: "Article 7. Service Interruption and Termination",
+        subsections: [
+          {
+            heading: "Service Interruption",
+            paragraphs: [
+              "The website may temporarily interrupt services due to system maintenance, upgrades, or force majeure. The company will try to notify users in advance."
+            ]
+          },
+          {
+            heading: "Service Termination",
+            bullets: [
+              "If a user violates this agreement, the company has the right to suspend or terminate that user's account access.",
+              "If a user voluntarily stops using the services, the company assumes no liability."
+            ]
+          }
+        ]
+      },
+      {
+        id: "disclaimer",
+        heading: "Article 8. Disclaimer",
+        bullets: [
+          "The website services are provided as is, without express or implied warranties regarding suitability, error-free operation, or reliability.",
+          "The website is not liable for indirect, incidental, special, or punitive losses caused by users' use of, or inability to use, the services."
+        ]
+      },
+      {
+        id: "modification",
+        heading: "Article 9. Modification",
+        paragraphs: [
+          "The website may modify this agreement from time to time according to actual needs. Modified terms will be announced on the website. Continued use of the services after modification constitutes acceptance of the updated terms."
+        ]
+      },
+      {
+        id: "disputes",
+        heading: "Article 10. Dispute Resolution",
+        paragraphs: [
+          "Disputes arising from or related to this agreement should first be resolved through friendly consultation. If consultation fails, either party may bring a lawsuit before the people's court with jurisdiction over the location of Shanghai Naoshang Media Technology Co., Ltd."
+        ]
+      },
+      {
+        id: "contact",
+        heading: "Article 11. Contact",
+        paragraphs: [
+          "If you have questions about this agreement or the website services, please contact us.",
+          "Company name: Shanghai Naoshang Media Technology Co., Ltd.",
+          "Email: support@neu-reality.com",
+          "Please carefully read and fully understand these terms before registering for or using this website. If you continue to use the website services, you are deemed to have accepted all terms of this agreement."
+        ]
+      }
+    ]
+  }
+};
+
+const pageRoutes: Record<string, StaticPageKey> = {
+  "/about-us": "about",
+  "/about-us/": "about",
+  "/private-policy": "privacy",
+  "/private-policy/": "privacy",
+  "/privacy-policy": "privacy",
+  "/privacy-policy/": "privacy",
+  "/terms-of-service": "terms",
+  "/terms-of-service/": "terms"
+};
+
+function getStaticPageKey(pathname = window.location.pathname): StaticPageKey | null {
+  return pageRoutes[pathname] ?? pageRoutes[pathname.replace(/\/$/, "")] ?? null;
+}
+
 const articleLabels = ["Cognitive Science", "AI & Medicine", "Science & Society", "Neuroethics"];
 const podcastMeta = [
   ["Ep. 32", "55 min"],
@@ -57,6 +459,7 @@ const podcastMeta = [
   ["Ep. 16", "1 hr 7 min"],
   ["Ep. 5", "1 hr 19 min"]
 ];
+const showCollaborationCases = false;
 
 const neuroaestheticsIntro = [
   "Since 2016, we have continuously introduced and explored the field of neuroaesthetics through articles, podcasts, and public events. At the heart of this field lies a compelling idea: beauty may not exist solely within the artwork itself, but within the neural activity of the viewer and listener.",
@@ -68,6 +471,31 @@ const neuroaestheticsIntro = [
     of pioneering figures in neuroaesthetics, including Semir Zeki and Eric Kandel, to our readers.
   </>,
   "Over the years, an increasing number of audiences have come to appreciate the unique intersection between neuroscience and art through our work. In this special feature, we revisit and reflect on our journey through neuroaesthetics."
+] as const;
+
+const neuroaestheticsPodcastDurations = ["1 hr 5 min", "2 hr 14 min", "1 hr 45 min", "1 hr 28 min", "1 hr 7 min"] as const;
+const neuroaestheticsArticleLinks = [
+  "https://mp.weixin.qq.com/s/Zijtb0SxiPc00fIzodKH8Q",
+  "https://mp.weixin.qq.com/s/ckE73Y12FVVFPdZ1Zw0IWw",
+  "https://mp.weixin.qq.com/s/TUVHh8KY9i-gnVgqNPKtrA",
+  "https://mp.weixin.qq.com/s/hfP-uJdLd55qskDjAosTug",
+  "https://mp.weixin.qq.com/s/UrWGL0KbPx5VCuFQXhh05A",
+  "https://mp.weixin.qq.com/s/kx-Q7wdWPlKNGIeO1PJw8A",
+  "https://mp.weixin.qq.com/s/qKTYBbYexVu0QHviBnp4cQ",
+  "https://mp.weixin.qq.com/s/FRKbN2693o-A3sssYuPf_Q"
+] as const;
+const neuroaestheticsPodcastLinks = [
+  "https://open.spotify.com/episode/4snPCacqneJeud3dpIplxT?si=004ae2b9b08d4657",
+  "https://open.spotify.com/episode/23sUGrPFz9ZZHjkvZzMrKm?si=73cee0827d964c61",
+  "https://open.spotify.com/episode/7crYRyG4oFcS1aLu30CVEG?si=33b0b18cc57542d4",
+  "https://open.spotify.com/episode/4bdZtEjMGVzI5hkmalxnC8?si=2db941817fe44d06",
+  "https://open.spotify.com/episode/1dw5Iv2yOSeAvbAoU51XjV?si=2a8628af8c024cd4"
+] as const;
+const neuroaestheticsEventLinks = [
+  "https://neu-reality.com/2019/11/mind-plus-live-neuroaesthetics",
+  "https://neu-reality.com/2024/10/mondrians-spatial-unconscious",
+  "https://www.bilibili.com/video/BV1Yf4y1P7An",
+  "https://www.bilibili.com/video/BV1Xg411P7zY"
 ] as const;
 
 const heroSlides = [
@@ -204,12 +632,23 @@ function loadContent(): SiteContent {
 function App() {
   const [content, setContent] = useState<SiteContent>(() => loadContent());
   const [showAdmin, setShowAdmin] = useState(() => window.location.hash === "#admin");
+  const [staticPageKey, setStaticPageKey] = useState<StaticPageKey | null>(() => getStaticPageKey());
   const [activeHeroSlide, setActiveHeroSlide] = useState(0);
 
   useEffect(() => {
-    const onHashChange = () => setShowAdmin(window.location.hash === "#admin");
+    const syncLocationState = () => {
+      setShowAdmin(window.location.hash === "#admin");
+      setStaticPageKey(getStaticPageKey());
+    };
+
+    const onHashChange = () => syncLocationState();
+    const onPopState = () => syncLocationState();
     window.addEventListener("hashchange", onHashChange);
-    return () => window.removeEventListener("hashchange", onHashChange);
+    window.addEventListener("popstate", onPopState);
+    return () => {
+      window.removeEventListener("hashchange", onHashChange);
+      window.removeEventListener("popstate", onPopState);
+    };
   }, []);
 
   useEffect(() => {
@@ -256,6 +695,16 @@ function App() {
         <main>
           <AdminPanel content={content} onUpdate={saveContent} />
         </main>
+      </div>
+    );
+  }
+
+  if (staticPageKey) {
+    return (
+      <div className="site-shell">
+        <Header />
+        <StaticPage page={staticPages[staticPageKey]} />
+        <Footer />
       </div>
     );
   }
@@ -310,6 +759,7 @@ function App() {
           headline="Ideas that expand understanding"
           intro="Curated writings from leading researchers and thinkers."
           linkText="View all articles"
+          linkHref="https://neu-reality.com/"
         >
           <div className="article-grid">
             {content.articles.map((article, index) => (
@@ -317,7 +767,15 @@ function App() {
                 <Cover src={article.cover} alt="" />
                 <div className="content-card__body">
                   <span>{articleLabels[index] ?? "Research"}</span>
-                  <h3>{article.title}</h3>
+                  <h3>
+                    {article.link ? (
+                      <a href={article.link} target="_blank" rel="noreferrer">
+                        {article.title}
+                      </a>
+                    ) : (
+                      article.title
+                    )}
+                  </h3>
                   <p>{article.summary}</p>
                   <small>By {article.author}</small>
                 </div>
@@ -333,6 +791,7 @@ function App() {
           headline="Conversations that go deeper"
           intro="Dialogue with scientists, clinicians, and visionaries shaping the future."
           linkText="View all interviews"
+          linkHref="https://neu-reality.com/category/speech-and-interview/qa/"
         >
           <div className="interview-grid">
             {content.interviews.map((interview) => (
@@ -342,10 +801,14 @@ function App() {
                   <span>{interview.name}</span>
                   <small>{interview.title}</small>
                   <h3>{interview.headline}</h3>
-                  <a className="card-link" href="#interviews">
-                    Read more
-                    <ArrowRight size={15} />
-                  </a>
+                  {interview.link ? (
+                    <a className="card-link" href={interview.link} target="_blank" rel="noreferrer">
+                      Read more
+                      <ArrowRight size={15} />
+                    </a>
+                  ) : (
+                    <span className="card-link card-link--disabled">Coming soon</span>
+                  )}
                 </div>
               </article>
             ))}
@@ -354,9 +817,9 @@ function App() {
 
         <EditorialSection
           id="podcasts"
-          kicker="Neuromancing · Podcast"
-          title="Neuromancing"
-          headline="The unknown mind"
+          kicker="PODCAST"
+          title="NEUROMANCING"
+          headline="NEUROMANCING"
           intro="Wandering through the landscapes of neuroscience and cognitive science, uncovering the hidden mechanisms and subtle fascinations beneath cognition and perception."
           asideExtra={<PodcastListenLinks />}
         >
@@ -371,7 +834,15 @@ function App() {
                 </div>
                 <div className="content-card__body">
                   <span>{podcastMeta[index]?.[0] ?? "Episode"}</span>
-                  <h3>{podcast.title}</h3>
+                  <h3>
+                    {podcast.link ? (
+                      <a href={podcast.link} target="_blank" rel="noreferrer">
+                        {podcast.title}
+                      </a>
+                    ) : (
+                      podcast.title
+                    )}
+                  </h3>
                   <small>{podcastMeta[index]?.[1] ?? "Listen"}</small>
                 </div>
               </article>
@@ -408,7 +879,15 @@ function App() {
                 <Cover src={event.cover} alt="" />
                 <div className="content-card__body">
                   <span>{event.location}</span>
-                  <h3>{event.theme}</h3>
+                  <h3>
+                    {event.link ? (
+                      <a href={event.link} target="_blank" rel="noreferrer">
+                        {event.theme}
+                      </a>
+                    ) : (
+                      event.theme
+                    )}
+                  </h3>
                   <small>{event.time}</small>
                 </div>
               </article>
@@ -422,7 +901,6 @@ function App() {
           title="Noetex Academy"
           headline="Education for the future"
           intro="Interdisciplinary learning across neuroscience, AI, and complex systems."
-          linkText="View all courses"
         >
           <div className="course-grid">
             {content.courses.slice(0, 4).map((course) => (
@@ -474,18 +952,29 @@ function App() {
                   <strong>{neuroaestheticsArticles.length.toString().padStart(2, "0")}</strong>
                 </div>
                 <ol className="topic-article-grid">
-                  {neuroaestheticsArticles.map((item, index) => (
+                  {neuroaestheticsArticles.map((item, index) => {
+                    const itemLink = item.link ?? neuroaestheticsArticleLinks[index];
+                    return (
                     <li className="topic-article" key={item.title}>
+                      {itemLink ? (
+                        <a
+                          className="topic-item-link"
+                          href={itemLink}
+                          target="_blank"
+                          rel="noreferrer"
+                          aria-label={`Open ${item.title}`}
+                        />
+                      ) : null}
                       <div className="topic-article__cover">
                         {item.cover ? <img src={item.cover} alt="" /> : <Camera aria-hidden="true" />}
                       </div>
                       <div className="topic-article__body">
                         <span>{String(index + 1).padStart(2, "0")}</span>
                         <h3>{item.title}</h3>
-                        <p>By {item.author || "Neu-Reality"}</p>
                       </div>
                     </li>
-                  ))}
+                  );
+                  })}
                 </ol>
               </section>
 
@@ -495,21 +984,35 @@ function App() {
                   <strong>{neuroaestheticsPodcasts.length.toString().padStart(2, "0")}</strong>
                 </div>
                 <ol className="topic-playlist">
-                  {neuroaestheticsPodcasts.map((item, index) => (
+                  {neuroaestheticsPodcasts.map((item, index) => {
+                    const itemLink = item.link ?? neuroaestheticsPodcastLinks[index];
+                    return (
                     <li className="topic-playlist__item" key={item.title}>
+                      {itemLink ? (
+                        <a
+                          className="topic-item-link"
+                          href={itemLink}
+                          target="_blank"
+                          rel="noreferrer"
+                          aria-label={`Open ${item.title}`}
+                        />
+                      ) : null}
                       <span>{String(index + 1).padStart(2, "0")}</span>
                       <div className="topic-playlist__button" aria-hidden="true">
                         <Play size={15} />
                       </div>
                       <div>
                         <h3>{item.title}</h3>
-                        <p>
-                          <strong>Guests</strong>
-                          {item.guests || "Guests to be confirmed"}
-                        </p>
+                        {neuroaestheticsPodcastDurations[index] ? (
+                          <p>
+                            <strong>Duration</strong>
+                            {neuroaestheticsPodcastDurations[index]}
+                          </p>
+                        ) : null}
                       </div>
                     </li>
-                  ))}
+                  );
+                  })}
                 </ol>
               </section>
 
@@ -519,8 +1022,19 @@ function App() {
                   <strong>{neuroaestheticsEvents.length.toString().padStart(2, "0")}</strong>
                 </div>
                 <ol className="topic-event-list">
-                  {neuroaestheticsEvents.map((item, index) => (
+                  {neuroaestheticsEvents.map((item, index) => {
+                    const itemLink = item.link ?? neuroaestheticsEventLinks[index];
+                    return (
                     <li className="topic-event" key={item.title}>
+                      {itemLink ? (
+                        <a
+                          className="topic-item-link"
+                          href={itemLink}
+                          target="_blank"
+                          rel="noreferrer"
+                          aria-label={`Open ${item.title}`}
+                        />
+                      ) : null}
                       <span>{String(index + 1).padStart(2, "0")}</span>
                       <div>
                         <h3>{item.title}</h3>
@@ -530,59 +1044,66 @@ function App() {
                             <dd>{item.time || "Time to be confirmed"}</dd>
                           </div>
                           <div>
-                            <dt>Speakers</dt>
+                            <dt>{item.speakers?.includes(",") ? "Speakers" : "Speaker"}</dt>
                             <dd>{item.speakers || "Speakers to be confirmed"}</dd>
                           </div>
                         </dl>
                       </div>
                     </li>
-                  ))}
+                  );
+                  })}
                 </ol>
               </section>
             </div>
           </div>
         </section>
 
-        <EditorialSection
-          id="projects"
-          kicker="Collaboration Cases"
-          title="Collaboration Cases"
-          headline="Building impact together"
-          intro="Selected projects with institutions, publishers, and innovators."
-          linkText="View all cases"
-        >
-          <div className="project-grid">
-            {content.projects.slice(0, 3).map((project) => (
-              <article className="content-card project-card" key={project.title}>
-                <Cover src={project.cover} alt="" />
-                <div className="content-card__body">
-                  <h3>{project.title}</h3>
-                  <p>{project.intro}</p>
-                </div>
-              </article>
-            ))}
-            <CalloutCard icon={<Network />} title="Partnerships that advance knowledge and society." link="Work with us" />
-          </div>
-        </EditorialSection>
-
-        <section className="partners section-anchor" id="partners">
-          <div className="partners__lead">
-            <span>Partners</span>
-            <h2>Our partners</h2>
-            <p>A global network across academia, publishing, technology, and nonprofits.</p>
-          </div>
-          <div className="logo-wall" aria-label="Partner logos">
-            <div className="logo-wall__track">
-              {[...content.partners, ...content.partners].map((partner, index) => (
-                <article aria-hidden={index >= content.partners.length} key={`${partner.name}-${index}`}>
-                  {partner.logo ? <img src={partner.logo} alt={index < content.partners.length ? `${partner.name} logo` : ""} /> : <span>{partner.name}</span>}
+        {showCollaborationCases ? (
+          <EditorialSection
+            id="projects"
+            kicker="Collaboration Cases"
+            title="Collaboration Cases"
+            headline="Building impact together"
+            intro="Selected projects with institutions, publishers, and innovators."
+            linkText="View all cases"
+          >
+            <div className="project-grid">
+              {content.projects.slice(0, 3).map((project) => (
+                <article className="content-card project-card" key={project.title}>
+                  <Cover src={project.cover} alt="" />
+                  <div className="content-card__body">
+                    <h3>{project.title}</h3>
+                    <p>{project.intro}</p>
+                  </div>
                 </article>
               ))}
+              <CalloutCard icon={<Network />} title="Partnerships that advance knowledge and society." link="Work with us" />
+            </div>
+          </EditorialSection>
+        ) : null}
+
+        <section className="partners section-anchor" id="partners">
+          <div className="editorial-section__inner partners__inner">
+            <aside className="section-aside">
+              <span>Partners</span>
+              <h2>Our partners</h2>
+            </aside>
+            <div className="partners__content">
+              <p>A global network across academia, publishing, technology, and nonprofits.</p>
+              <div className="logo-wall" aria-label="Partner logos">
+                <div className="logo-wall__track">
+                  {[...content.partners, ...content.partners].map((partner, index) => (
+                    <article aria-hidden={index >= content.partners.length} key={`${partner.name}-${index}`}>
+                      {partner.logo ? <img src={partner.logo} alt={index < content.partners.length ? `${partner.name} logo` : ""} /> : <span>{partner.name}</span>}
+                    </article>
+                  ))}
+                </div>
+              </div>
             </div>
           </div>
         </section>
       </main>
-      <Footer platforms={content.platforms} />
+      <Footer />
     </div>
   );
 }
@@ -606,7 +1127,7 @@ function Header() {
 
   return (
     <header className={`site-header${isMenuOpen ? " is-menu-open" : ""}${isScrolled ? " is-scrolled" : ""}`}>
-      <a className="brand" href="#top" aria-label="Neu-Reality home">
+      <a className="brand" href="/#top" aria-label="Neu-Reality home">
         <img src={LOGO_IMAGE} alt="" />
       </a>
       <button
@@ -621,14 +1142,14 @@ function Header() {
       </button>
       <nav id="primary-navigation" aria-label="Primary navigation">
         {navItems.map(([label, href]) => (
-          <a href={`#${href}`} key={href} onClick={() => setIsMenuOpen(false)}>
+          <a href={`/#${href}`} key={href} onClick={() => setIsMenuOpen(false)}>
             {label}
           </a>
         ))}
         <div className="language-switch" aria-label="Language">
           <span aria-current="true">EN</span>
           <span aria-hidden="true">|</span>
-          <a href="https://neu-reality.com/" onClick={() => setIsMenuOpen(false)}>
+          <a href={chinesePageUrl()} onClick={() => setIsMenuOpen(false)}>
             CN
           </a>
         </div>
@@ -637,12 +1158,21 @@ function Header() {
   );
 }
 
+function chinesePageUrl() {
+  const pageKey = getStaticPageKey();
+  if (pageKey === "about") return "https://neu-reality.com/about-us/";
+  if (pageKey === "privacy") return "https://neu-reality.com/private-policy/";
+  if (pageKey === "terms") return "https://neu-reality.com/terms-of-service/";
+  return "https://neu-reality.com/";
+}
+
 function EditorialSection({
   id,
   kicker,
   headline,
   intro,
   linkText,
+  linkHref,
   asideExtra,
   children
 }: {
@@ -652,9 +1182,12 @@ function EditorialSection({
   headline: string;
   intro: string;
   linkText?: string;
+  linkHref?: string;
   asideExtra?: React.ReactNode;
   children: React.ReactNode;
 }) {
+  const isExternalLink = linkHref?.startsWith("http");
+
   return (
     <section className="editorial-section section-anchor" id={id}>
       <div className="editorial-section__inner">
@@ -664,7 +1197,12 @@ function EditorialSection({
           <p>{intro}</p>
           {asideExtra ? <div className="section-aside__extra">{asideExtra}</div> : null}
           {linkText ? (
-            <a className="section-link" href={`#${id}`}>
+            <a
+              className="section-link"
+              href={linkHref ?? `#${id}`}
+              rel={isExternalLink ? "noreferrer" : undefined}
+              target={isExternalLink ? "_blank" : undefined}
+            >
               {linkText}
               <ArrowRight size={16} />
             </a>
@@ -678,9 +1216,26 @@ function EditorialSection({
 
 function PodcastListenLinks() {
   const platforms = [
-    { label: "Spotify", logo: "/assets/podcast/spotify-card.svg" },
-    { label: "Apple Podcasts", logo: "/assets/podcast/apple-podcasts-card.svg" },
-    { label: "喜马拉雅", logo: "/assets/podcast/ximalaya-card.svg" }
+    {
+      label: "Spotify",
+      logo: "/assets/podcast/spotify-card.svg",
+      href: "https://open.spotify.com/show/1Ya8rAqwYNNdybDpf0JJXe?si=051ccaf4ef00415b"
+    },
+    {
+      label: "Apple Podcasts",
+      logo: "/assets/podcast/apple-podcasts-card.svg",
+      href: "https://podcasts.apple.com/gb/podcast//id1488227859"
+    },
+    {
+      label: "小宇宙",
+      logo: "/assets/podcast/xiaoyuzhou-card.svg",
+      href: "https://www.xiaoyuzhoufm.com/podcast/5e280fa7418a84a0461f8f01"
+    },
+    {
+      label: "喜马拉雅",
+      logo: "/assets/podcast/ximalaya-card.svg",
+      href: "https://xima.tv/1_RBM4yM?_sonic=0"
+    }
   ];
 
   return (
@@ -688,9 +1243,16 @@ function PodcastListenLinks() {
       <small>Listen on</small>
       <div className="podcast-platforms">
         {platforms.map((platform) => (
-          <span aria-label={platform.label} key={platform.label} title={platform.label}>
+          <a
+            aria-label={`Listen on ${platform.label}`}
+            href={platform.href}
+            key={platform.label}
+            rel="noreferrer"
+            target="_blank"
+            title={platform.label}
+          >
             <img src={platform.logo} alt="" />
-          </span>
+          </a>
         ))}
       </div>
     </div>
@@ -992,7 +1554,86 @@ function Field({
   );
 }
 
-function Footer({ platforms }: { platforms: SiteContent["platforms"] }) {
+function StaticPage({ page }: { page: StaticPageContent }) {
+  return (
+    <main className="static-page" id="top">
+      <section className="static-hero" aria-labelledby="static-page-title">
+        <div className="static-hero__image" aria-hidden="true">
+          <img src={HERO_IMAGE} alt="" />
+        </div>
+        <div className="static-hero__copy">
+          <span>{page.eyebrow}</span>
+          <h1 id="static-page-title">{page.title}</h1>
+          <p>{page.deck}</p>
+        </div>
+        {page.highlights ? (
+          <div className="static-hero__stats" aria-label={`${page.title} highlights`}>
+            {page.highlights.map(([value, label]) => (
+              <div key={label}>
+                <strong>{value}</strong>
+                <small>{label}</small>
+              </div>
+            ))}
+          </div>
+        ) : null}
+      </section>
+
+      <section className="static-document" aria-label={`${page.title} content`}>
+        <aside className="static-document__nav">
+          <span>On this page</span>
+          <nav aria-label={`${page.title} sections`}>
+            {page.sections.map((section) => (
+              <a href={`#${section.id}`} key={section.id}>
+                {section.heading.replace(/^Article\s+\d+\.\s*/, "").replace(/^\d+\.\s*/, "")}
+              </a>
+            ))}
+          </nav>
+        </aside>
+
+        <article className="static-document__body">
+          {page.sections.map((section) => (
+            <PageSectionBlock key={section.id} section={section} />
+          ))}
+        </article>
+      </section>
+    </main>
+  );
+}
+
+function PageSectionBlock({ section }: { section: PageSection }) {
+  return (
+    <section id={section.id} className="static-copy-section">
+      <h2>{section.heading}</h2>
+      {section.paragraphs?.map((paragraph) => (
+        <p key={paragraph}>{paragraph}</p>
+      ))}
+      <PageBulletList bullets={section.bullets} />
+      {section.subsections?.map((subsection) => (
+        <div className="static-copy-subsection" key={subsection.heading}>
+          <h3>{subsection.heading}</h3>
+          {subsection.paragraphs?.map((paragraph) => (
+            <p key={paragraph}>{paragraph}</p>
+          ))}
+          <PageBulletList bullets={subsection.bullets} />
+        </div>
+      ))}
+    </section>
+  );
+}
+
+function PageBulletList({ bullets }: { bullets?: string[] }) {
+  if (!bullets?.length) return null;
+
+  return (
+    <ul>
+      {bullets.map((item) => (
+        <li key={item}>{item}</li>
+      ))}
+    </ul>
+  );
+}
+
+function Footer() {
   return (
     <footer className="site-footer">
       <div className="footer-about">
@@ -1011,13 +1652,13 @@ function Footer({ platforms }: { platforms: SiteContent["platforms"] }) {
       <div className="footer-links">
         <h2>Links</h2>
         <nav aria-label="Footer navigation">
-          <a href="#top">Main Site</a>
-          <a href="#top">About</a>
-          <a href="#top">Privacy Policy</a>
-          <a href="#top">Terms of Service</a>
+          <a href="/">Main Site</a>
+          <a href="/about-us/">About Us</a>
+          <a href="/private-policy/">Privacy Policy</a>
+          <a href="/terms-of-service/">Terms of Service</a>
         </nav>
         <div className="footer-socials" aria-label="Social media links">
-          {platforms.map((platform) => (
+          {footerSocialLinks.map((platform) => (
             <a href={platform.url} key={platform.label} target="_blank" rel="noreferrer" aria-label={platform.label}>
               {socialIcon(platform.label)}
             </a>
@@ -1056,11 +1697,19 @@ function Footer({ platforms }: { platforms: SiteContent["platforms"] }) {
 
 function socialIcon(label: string) {
   const lower = label.toLowerCase();
-  if (lower.includes("instagram")) return <Instagram size={18} />;
-  if (lower.includes("linkedin")) return <Linkedin size={18} />;
-  if (lower.includes("youtube")) return <Youtube size={18} />;
-  if (lower === "x" || lower.includes("twitter")) return <X size={18} />;
-  return <Mail size={18} />;
+  const iconClass = lower.includes("instagram")
+    ? "bi-instagram"
+    : lower.includes("tiktok")
+      ? "bi-tiktok"
+      : lower.includes("bluesky")
+        ? "bi-bluesky"
+        : lower.includes("rss")
+          ? "bi-rss"
+          : lower === "x" || lower.includes("twitter")
+            ? "bi-twitter-x"
+            : "bi-link-45deg";
+
+  return <i className={`bi ${iconClass}`} aria-hidden="true" />;
 }
 
 export default App;
