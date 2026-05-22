@@ -1798,8 +1798,8 @@ svg {
     inset 0 1px 0 rgba(255, 255, 255, 0.14),
     0 14px 30px rgba(2, 4, 3, 0.12);
   color: var(--surface);
-  font-size: 0.66rem;
-  font-weight: 800;
+  font-size: 0.58rem;
+  font-weight: 650;
   letter-spacing: 0.02em;
   line-height: 1.25;
   backdrop-filter: blur(14px) saturate(1.25);
