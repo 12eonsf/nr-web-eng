@@ -1,27 +1,32 @@
 import {
   ArrowRight,
   Camera,
+  CalendarDays,
+  Clock3,
   Headphones,
   Instagram,
   Linkedin,
   Mail,
+  MapPin,
   Menu,
   Network,
   Play,
   Plus,
   Quote,
+  Radio,
   Save,
   Upload,
+  Users,
+  Video,
   X,
   Youtube
 } from "lucide-react";
 import { useEffect, useMemo, useState } from "react";
 import { defaultContent, SiteContent } from "./content";
 
-const STORAGE_KEY = "neu-reality-content-v7";
+const STORAGE_KEY = "neu-reality-content-v10";
 const HERO_IMAGE = "/assets/hero-illustration.jpg";
 const LOGO_IMAGE = "/assets/neu-reality-logo-white.png";
-const FOOTER_LOGO_IMAGE = "/assets/neu-reality-logo.png";
 const COMMUNITY_VIDEO = "/assets/BG Video.mp4";
 
 type SectionKey = keyof SiteContent;
@@ -52,6 +57,11 @@ const podcastMeta = [
   ["Ep. 16", "1 hr 7 min"],
   ["Ep. 5", "1 hr 19 min"]
 ];
+
+const neuroaestheticsIntro = [
+  "Since 2016, we have continuously introduced and explored the field of neuroaesthetics through articles, podcasts, and public events. At the heart of this field lies a compelling idea: beauty may not exist solely within the artwork itself, but within the neural activity of the viewer and listener. Together with philosopher Zhu Rui from Renmin University of China, we helped bring neuroaesthetics to the broader Chinese public for the first time in a systematic way, receiving enthusiastic responses and growing attention across disciplines.",
+  "Through talks such as Why Does Art Look Like Art?, we invited audiences to reflect on the \"parallelism between the brain and art,\" while podcast episodes like Mondrian Was a Neuroscientist explored why artists can, in many ways, be seen as intuitive neuroscientists. Alongside these projects, we have consistently introduced the works and ideas of pioneering figures in neuroaesthetics, including Semir Zeki and Eric Kandel, to our readers. Over the years, an increasing number of audiences have come to appreciate the unique intersection between neuroscience and art through our work. In this special feature, we revisit and reflect on our journey through neuroaesthetics."
+] as const;
 
 const heroSlides = [
   {
@@ -139,7 +149,11 @@ const adminSections: { key: SectionKey; label: string; fields: FieldConfig[] }[]
       { key: "kind", label: "Content Type", kind: "select", options: ["Article", "Podcast", "Event"] },
       { key: "cover", label: "Cover", kind: "media" },
       { key: "title", label: "Title" },
-      { key: "intro", label: "Intro", kind: "textarea" }
+      { key: "intro", label: "Intro", kind: "textarea" },
+      { key: "author", label: "Author" },
+      { key: "guests", label: "Guests" },
+      { key: "time", label: "Time" },
+      { key: "speakers", label: "Speakers" }
     ]
   },
   {
@@ -210,6 +224,18 @@ function App() {
   );
 
   const activeSlide = heroSlides[activeHeroSlide];
+  const neuroaestheticsArticles = useMemo(
+    () => content.neuroaesthetics.filter((item) => item.kind === "Article"),
+    [content.neuroaesthetics]
+  );
+  const neuroaestheticsPodcasts = useMemo(
+    () => content.neuroaesthetics.filter((item) => item.kind === "Podcast"),
+    [content.neuroaesthetics]
+  );
+  const neuroaestheticsEvents = useMemo(
+    () => content.neuroaesthetics.filter((item) => item.kind === "Event"),
+    [content.neuroaesthetics]
+  );
 
   const saveContent = (nextContent: SiteContent) => {
     setContent(nextContent);
@@ -396,44 +422,122 @@ function App() {
               <article className="content-card course-card" key={course.theme}>
                 <div className="course-card__media">
                   <Cover src={course.cover} alt="" />
-                  <span className="course-card__location">{course.location}</span>
+                  <CourseEnrollmentStatus status={course.enrollmentStatus} />
                 </div>
                 <div className="content-card__body">
                   <span>{course.type}</span>
                   <h3>{course.theme}</h3>
                   <CourseMentor course={course} />
+                  <p>{course.intro}</p>
+                  <CourseDetails details={course.details} />
+                  <CourseTags tags={course.tags} />
                 </div>
               </article>
             ))}
           </div>
         </EditorialSection>
 
-        <section className="topic-band section-anchor" id="neuroaesthetics">
-          <div className="topic-band__main">
-            <img src="/assets/neu-reality-vision-field.png" alt="" />
-            <div>
-              <span>Featured Topic</span>
-              <h2>Neuroaesthetics</h2>
-              <p>Exploring the science of beauty, perception, and creative experience.</p>
-              <a className="text-link text-link--light" href="#neuroaesthetics">
-                Explore the feature
-                <ArrowRight size={18} />
-              </a>
+        <section className="topic-feature section-anchor" id="neuroaesthetics" aria-labelledby="neuroaesthetics-title">
+          <div className="topic-feature__inner">
+            <div className="topic-feature__lead">
+              <div className="topic-feature__copy">
+                <span>Featured Topic</span>
+                <h2 id="neuroaesthetics-title">Neuroaesthetics</h2>
+                <p className="topic-feature__thesis">
+                  Beauty may not exist solely within the artwork itself, but within the neural activity of the viewer and listener.
+                </p>
+              </div>
+              <div className="topic-feature__field" aria-hidden="true">
+                <img src="/assets/neu-reality-vision-field.png" alt="" />
+                <div className="topic-feature__signal">
+                  <i />
+                  <i />
+                  <i />
+                </div>
+              </div>
+            </div>
+
+            <div className="topic-feature__narrative">
+              <div className="topic-feature__year" aria-hidden="true">
+                <strong>2016</strong>
+                <span>Present</span>
+              </div>
+              <div className="topic-feature__text">
+                {neuroaestheticsIntro.map((paragraph) => (
+                  <p key={paragraph}>{paragraph}</p>
+                ))}
+              </div>
+            </div>
+
+            <div className="topic-archive" aria-label="Neuroaesthetics complete feature archive">
+              <section className="topic-archive__group topic-archive__group--articles">
+                <div className="topic-archive__heading">
+                  <span>Articles</span>
+                  <strong>{neuroaestheticsArticles.length.toString().padStart(2, "0")}</strong>
+                </div>
+                <ol className="topic-article-grid">
+                  {neuroaestheticsArticles.map((item, index) => (
+                    <li className="topic-article" key={item.title}>
+                      <span>{String(index + 1).padStart(2, "0")}</span>
+                      <h3>{item.title}</h3>
+                      <p>By {item.author || "Neu-Reality"}</p>
+                    </li>
+                  ))}
+                </ol>
+              </section>
+
+              <section className="topic-archive__group topic-archive__group--podcasts">
+                <div className="topic-archive__heading">
+                  <span>Podcasts</span>
+                  <strong>{neuroaestheticsPodcasts.length.toString().padStart(2, "0")}</strong>
+                </div>
+                <ol className="topic-playlist">
+                  {neuroaestheticsPodcasts.map((item, index) => (
+                    <li className="topic-playlist__item" key={item.title}>
+                      <span>{String(index + 1).padStart(2, "0")}</span>
+                      <div className="topic-playlist__button" aria-hidden="true">
+                        <Play size={15} />
+                      </div>
+                      <div>
+                        <h3>{item.title}</h3>
+                        <p>
+                          <strong>Guests</strong>
+                          {item.guests || "Guests to be confirmed"}
+                        </p>
+                      </div>
+                    </li>
+                  ))}
+                </ol>
+              </section>
+
+              <section className="topic-archive__group topic-archive__group--events">
+                <div className="topic-archive__heading">
+                  <span>Events</span>
+                  <strong>{neuroaestheticsEvents.length.toString().padStart(2, "0")}</strong>
+                </div>
+                <ol className="topic-event-list">
+                  {neuroaestheticsEvents.map((item, index) => (
+                    <li className="topic-event" key={item.title}>
+                      <span>{String(index + 1).padStart(2, "0")}</span>
+                      <div>
+                        <h3>{item.title}</h3>
+                        <dl>
+                          <div>
+                            <dt>Time</dt>
+                            <dd>{item.time || "Time to be confirmed"}</dd>
+                          </div>
+                          <div>
+                            <dt>Speakers</dt>
+                            <dd>{item.speakers || "Speakers to be confirmed"}</dd>
+                          </div>
+                        </dl>
+                      </div>
+                    </li>
+                  ))}
+                </ol>
+              </section>
             </div>
           </div>
-          <div className="topic-band__list">
-            {content.neuroaesthetics.slice(0, 3).map((item) => (
-              <a href="#neuroaesthetics" key={item.title}>
-                <span>{item.kind}</span>
-                <h3>{item.title}</h3>
-                <ArrowRight size={16} />
-              </a>
-            ))}
-          </div>
-          <a className="topic-band__cta" href="#neuroaesthetics">
-            View all neuroaesthetics content
-            <ArrowRight size={18} />
-          </a>
         </section>
 
         <EditorialSection
@@ -615,11 +719,10 @@ function CourseMentor({ course }: { course: SiteContent["courses"][number] }) {
   const legacyMentor = course.mentor?.trim() ?? "";
   const legacyParts = legacyMentor.split(",").map((part) => part.trim()).filter(Boolean);
   const hasLegacyName = legacyParts.length > 1;
+  const hasMentorName = Boolean(course.mentorName);
   const name = course.mentorName || (hasLegacyName ? legacyParts[0] : "Faculty Mentor");
-  const title =
-    course.mentorTitle ||
-    (hasLegacyName ? legacyParts.slice(1).join(", ") : legacyMentor) ||
-    "Noetex Academy Mentor";
+  const title = course.mentorTitle || (!hasMentorName ? (hasLegacyName ? legacyParts.slice(1).join(", ") : legacyMentor) : "");
+  const isLogoAvatar = course.mentorAvatarVariant === "logo";
   const initials = name
     .split(/\s+/)
     .filter(Boolean)
@@ -629,8 +732,8 @@ function CourseMentor({ course }: { course: SiteContent["courses"][number] }) {
     .toUpperCase();
 
   return (
-    <div className="course-mentor">
-      <div className="course-mentor__avatar">
+    <div className={`course-mentor${isLogoAvatar ? " course-mentor--logo" : ""}`}>
+      <div className={`course-mentor__avatar${isLogoAvatar ? " course-mentor__avatar--logo" : ""}`}>
         {course.mentorAvatar ? (
           <img src={course.mentorAvatar} alt={`${name} avatar`} />
         ) : (
@@ -639,8 +742,67 @@ function CourseMentor({ course }: { course: SiteContent["courses"][number] }) {
       </div>
       <div className="course-mentor__copy">
         <strong>{name}</strong>
-        <small>{title}</small>
+        {title ? <small>{title}</small> : null}
       </div>
+    </div>
+  );
+}
+
+function CourseTags({ tags }: { tags?: SiteContent["courses"][number]["tags"] }) {
+  const items = Array.isArray(tags)
+    ? tags
+    : typeof tags === "string"
+      ? tags.split(/[,，]/).map((tag) => tag.trim()).filter(Boolean)
+      : [];
+
+  if (!items.length) return null;
+
+  return (
+    <div className="course-tags" aria-label="Course topics">
+      {items.map((tag) => (
+        <span key={tag}>{tag}</span>
+      ))}
+    </div>
+  );
+}
+
+function CourseDetails({ details }: { details?: SiteContent["courses"][number]["details"] }) {
+  if (!details) return null;
+
+  const items: { icon: React.ReactNode; label?: string }[] = [
+    { icon: <Radio size={15} />, label: details.format },
+    { icon: <Clock3 size={15} />, label: details.duration },
+    { icon: <Users size={15} />, label: details.capacity },
+    { icon: <CalendarDays size={15} />, label: details.start },
+    { icon: <Video size={15} />, label: details.platform },
+    { icon: <MapPin size={15} />, label: details.venue }
+  ].filter((item) => Boolean(item.label));
+
+  return (
+    <div className="course-details" aria-label="Course details">
+      {items.map((item) => (
+        <span key={item.label}>
+          {item.icon}
+          {item.label}
+        </span>
+      ))}
+    </div>
+  );
+}
+
+function CourseEnrollmentStatus({ status }: { status?: SiteContent["courses"][number]["enrollmentStatus"] }) {
+  const isOpen = status === "open";
+
+  return (
+    <div className={`course-status${isOpen ? " course-status--open" : " course-status--completed"}`}>
+      {isOpen ? (
+        <>
+          <strong>New Cohort</strong>
+          <span>Open for Enrollment</span>
+        </>
+      ) : (
+        <strong>Completed</strong>
+      )}
     </div>
   );
 }
@@ -830,27 +992,60 @@ function Field({
 function Footer({ platforms }: { platforms: SiteContent["platforms"] }) {
   return (
     <footer className="site-footer">
-      <div>
-        <a className="brand brand--footer" href="#top">
-          <img src={FOOTER_LOGO_IMAGE} alt="" />
-          <strong>Neu-Reality</strong>
-        </a>
-        <p className="footer-slogan">A public observatory for brain science, intelligence, and future education.</p>
-        <p>Address: 71-75 Shelton Street, Covent Garden, London</p>
+      <div className="footer-about">
+        <h2>About Us</h2>
+        <p>
+          Neu-Reality (神经现实) is one of China’s leading independent science communication
+          platforms dedicated to neuroscience and artificial intelligence. Over the past decade,
+          Neu-Reality has built a global network of nearly 400 contributors from institutions
+          including MIT, Harvard, Stanford, Oxford, Cambridge, the Max Planck Institutes, while
+          reaching more than one million subscribers across platforms. Through publications, public
+          events, podcasts, academic collaborations, and educational initiatives, Neu-Reality
+          connects research, technology, and culture to foster deeper public understanding of the
+          brain, intelligence, and emerging technologies shaping the future.
+        </p>
       </div>
-      <div className="footer-socials" aria-label="Social media links">
-        {platforms.map((platform) => (
-          <a href={platform.url} key={platform.label} target="_blank" rel="noreferrer" aria-label={platform.label}>
-            {socialIcon(platform.label)}
+      <div className="footer-links">
+        <h2>Links</h2>
+        <nav aria-label="Footer navigation">
+          <a href="#top">Main Site</a>
+          <a href="#top">About</a>
+          <a href="#top">Privacy Policy</a>
+          <a href="#top">Terms of Service</a>
+        </nav>
+        <div className="footer-socials" aria-label="Social media links">
+          {platforms.map((platform) => (
+            <a href={platform.url} key={platform.label} target="_blank" rel="noreferrer" aria-label={platform.label}>
+              {socialIcon(platform.label)}
+            </a>
+          ))}
+        </div>
+      </div>
+      <div className="footer-contact">
+        <h2>Contact</h2>
+        <address>
+          <strong>Shanghai</strong>
+          <a href="mailto:support@neu-reality.com">
+            <Mail size={15} />
+            support@neu-reality.com
           </a>
-        ))}
+          <span>
+            <MapPin size={15} />
+            Building 1, No. 947 Jinle Road, Baoshan District, Shanghai, China
+          </span>
+        </address>
+        <address>
+          <strong>London</strong>
+          <a href="mailto:info@noetex.ai">
+            <Mail size={15} />
+            info@noetex.ai
+          </a>
+          <span>
+            <MapPin size={15} />
+            71-75 Shelton Street, Covent Garden, London, UK
+          </span>
+        </address>
       </div>
-      <nav aria-label="Footer navigation">
-        <a href="#top">About Us</a>
-        <a href="#top">Privacy Policy</a>
-        <a href="#top">Terms of Service</a>
-        <a href="mailto:hello@neu-reality.com">Contact</a>
-      </nav>
       <p className="copyright">© 2016-2026 神经现实 Neu-Reality | © 2025-2026 Noetex Ltd.</p>
     </footer>
   );

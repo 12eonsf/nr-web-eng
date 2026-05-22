@@ -31,9 +31,20 @@ export type Course = {
   theme: string;
   mentor?: string;
   mentorAvatar?: string;
+  mentorAvatarVariant?: "photo" | "logo";
   mentorName: string;
   mentorTitle: string;
   intro: string;
+  details?: {
+    format?: string;
+    duration?: string;
+    capacity?: string;
+    start?: string;
+    platform?: string;
+    venue?: string;
+  };
+  tags?: string[] | string;
+  enrollmentStatus?: "open" | "completed";
   type: "Course" | "Workshop";
   location: string;
 };
@@ -43,6 +54,10 @@ export type TopicItem = {
   cover: string;
   title: string;
   intro: string;
+  author?: string;
+  guests?: string;
+  time?: string;
+  speakers?: string;
 };
 
 export type Project = {
@@ -263,47 +278,77 @@ export const defaultContent: SiteContent = {
   ],
   courses: [
     {
-      cover: "/assets/Does the Brain Flip Coins.png",
+      cover: "/assets/academy/decision-making.jpg",
       theme: "The Neuroscience of Decision-Making",
       mentorAvatar: "/assets/falculty/alireza-soltani.jpg",
       mentorName: "Alireza Soltani",
       mentorTitle: "Associate Professor at Dartmouth College",
       intro:
-        "A course on neural computation, choice behavior, and the mechanisms that shape decisions.",
+        "This course explores how the brain represents reward, risk, and uncertainty to shape decision-making, learning, and social behavior.",
+      details: {
+        format: "Livestreaming",
+        duration: "7 weeks",
+        start: "Start: October, 2025",
+        platform: "Zoom"
+      },
+      tags: ["Computational Neuroscience", "Cognitive Neuroscience", "Neuropharmacology", "Neuroeconomics", "Decision-Making"],
+      enrollmentStatus: "open",
       type: "Course",
       location: "Online"
     },
     {
-      cover: "/assets/Time and Consciousness in the Images of Life.jpg",
+      cover: "/assets/academy/Memory.jpg",
       theme: "The Neuroscience of Memory",
       mentorAvatar: "/assets/falculty/Lila-Davachi.png",
       mentorName: "Lila Davachi",
       mentorTitle: "Professor of Psychology at Columbia University",
       intro:
-        "A course on memory systems, learning, and how experience is transformed into durable knowledge.",
+        "This course explores how the brain encodes, consolidates, and retrieves memories, showing how everyday experiences become lasting episodic memories.",
+      details: {
+        format: "Livestreaming",
+        duration: "7 weeks",
+        start: "Start: September, 2026",
+        platform: "Zoom"
+      },
+      tags: ["Cognitive Neuroscience", "Psychology", "Learning", "Memory"],
+      enrollmentStatus: "open",
       type: "Course",
       location: "Online"
     },
     {
-      cover: "/assets/London Brain and Intelligence Summit.png",
+      cover: "/assets/academy/cognitive-control.jpg",
       theme: "How We Adapt Our Thinking and Behavior to Goals",
       mentorAvatar: "",
-      mentorName: "Cambridge Faculty",
-      mentorTitle: "Faculty from University of Cambridge",
+      mentorName: "Faculty from University of Cambridge",
+      mentorTitle: "",
       intro:
-        "A Cambridge-based course on cognitive flexibility, goal-directed behavior, and adaptive thought.",
-      type: "Course",
+        "This Cambridge-based workshop explores the brain's planning mechanism that enables flexible goal-directed behavior through hands-on cognitive neuroscience research.",
+      details: {
+        format: "In-person",
+        duration: "3 Days",
+        start: "Start: August 24, 2025",
+        venue: "Cambridge"
+      },
+      enrollmentStatus: "completed",
+      type: "Workshop",
       location: "Cambridge"
     },
     {
-      cover: "/assets/“Democratic” Neural Networks.png",
+      cover: "/assets/academy/economic-games.jpg",
       theme: "Cognitive Algorithms and Neural Mechanisms of Economic Games",
       mentorAvatar: "",
-      mentorName: "UCL Faculty",
-      mentorTitle: "Faculty from University College London",
+      mentorName: "Faculty from University College London",
+      mentorTitle: "",
       intro:
-        "A London course exploring economic games, decision models, and the neural mechanisms of social exchange.",
-      type: "Course",
+        "This London-based workshop investigates how biological and machine agents make optimal decisions in strategic interactions through game theory and neuroscience.",
+      details: {
+        format: "In-person",
+        duration: "3 Days",
+        start: "Start: August 24, 2025",
+        venue: "London"
+      },
+      enrollmentStatus: "completed",
+      type: "Workshop",
       location: "London"
     },
     {
@@ -321,24 +366,126 @@ export const defaultContent: SiteContent = {
   neuroaesthetics: [
     {
       kind: "Article",
-      cover: cover("photo-1547891654-e66ed7ebb968"),
-      title: "Why Beauty Changes Attention",
-      intro:
-        "A field note on aesthetics, perception, and the cognitive architecture of preference."
+      cover: "",
+      title: "Beauty Exists Within the Viewer's Nervous System",
+      intro: "",
+      author: "Neu-Reality"
+    },
+    {
+      kind: "Article",
+      cover: "",
+      title: "Will Neuroscience Constrain Art Appreciation?",
+      intro: "",
+      author: "Neu-Reality"
+    },
+    {
+      kind: "Article",
+      cover: "",
+      title: "Where Does the Beauty of Art Truly Reside?",
+      intro: "",
+      author: "Neu-Reality"
+    },
+    {
+      kind: "Article",
+      cover: "",
+      title: "Neuroaesthetics: The Chemical Reactions Between Brain and Art",
+      intro: "",
+      author: "Neu-Reality"
+    },
+    {
+      kind: "Article",
+      cover: "",
+      title: "Returning to Vienna: Understanding Brain and Art with a Nobel Laureate",
+      intro: "",
+      author: "Neu-Reality"
+    },
+    {
+      kind: "Article",
+      cover: "",
+      title: "The Pleasure of Art: A Game of Perception and Creation",
+      intro: "",
+      author: "Neu-Reality"
+    },
+    {
+      kind: "Article",
+      cover: "",
+      title: "Beauty That Overwhelms: The Mystery of Stendhal Syndrome",
+      intro: "",
+      author: "Neu-Reality"
+    },
+    {
+      kind: "Article",
+      cover: "",
+      title: "Is Art a Human Monopoly?",
+      intro: "",
+      author: "Neu-Reality"
     },
     {
       kind: "Podcast",
-      cover: cover("photo-1500530855697-b586d89ba3ee"),
-      title: "The Brain in the Gallery",
-      intro:
-        "A conversation on art, prediction, and the neuroscience of visual experience."
+      cover: "",
+      title: "An Introduction to Neuroaesthetics: Mondrian Was a Neuroscientist",
+      intro: "",
+      guests: "Neuromancing"
+    },
+    {
+      kind: "Podcast",
+      cover: "",
+      title: "Three Artworks That Challenged Scientific Ethics",
+      intro: "",
+      guests: "Neuromancing"
+    },
+    {
+      kind: "Podcast",
+      cover: "",
+      title: "When Embodied Senses Meet the AI Artist",
+      intro: "",
+      guests: "Neuromancing"
+    },
+    {
+      kind: "Podcast",
+      cover: "",
+      title: "The Media Artist Obsessed with Technological Sublimity",
+      intro: "",
+      guests: "Neuromancing"
+    },
+    {
+      kind: "Podcast",
+      cover: "",
+      title: "On Fear",
+      intro: "",
+      guests: "Neuromancing"
     },
     {
       kind: "Event",
-      cover: cover("photo-1505373877841-8d25f7d46678"),
-      title: "Neuroaesthetics Roundtable",
-      intro:
-        "A gathering for scientists, curators, designers, and educators exploring experience."
+      cover: "",
+      title: "Why Does Art Look Like Art?",
+      intro: "",
+      time: "Time to be confirmed",
+      speakers: "Speakers to be confirmed"
+    },
+    {
+      kind: "Event",
+      cover: "",
+      title: "When Art Touches the Nervous System: Mondrian's Spatial Unconscious",
+      intro: "",
+      time: "Time to be confirmed",
+      speakers: "Speakers to be confirmed"
+    },
+    {
+      kind: "Event",
+      cover: "",
+      title: "Space: Machines, the Brain, and Art",
+      intro: "",
+      time: "Time to be confirmed",
+      speakers: "Speakers to be confirmed"
+    },
+    {
+      kind: "Event",
+      cover: "",
+      title: "Understanding Emotion Through Brain and Art",
+      intro: "",
+      time: "Time to be confirmed",
+      speakers: "Speakers to be confirmed"
     }
   ],
   projects: [
