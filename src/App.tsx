@@ -24,6 +24,7 @@ import { defaultContent, PlatformLink, SiteContent } from "./content";
 const STORAGE_KEY = "neu-reality-content-v11";
 const HERO_IMAGE = "/assets/hero-illustration.jpg";
 const LOGO_IMAGE = "/assets/neu-reality-logo-white.png";
+const MOBILE_NAV_LOGO_IMAGE = "/assets/mobile-nav-logo.png";
 const COMMUNITY_VIDEO = "/assets/BG Video.mp4";
 
 type SectionKey = keyof SiteContent;
@@ -1241,12 +1242,19 @@ function Header() {
             CN
           </a>
         </div>
-        <div className="mobile-nav-socials" aria-label="Social media links">
-          {footerSocialLinks.map((platform) => (
-            <a href={platform.url} key={platform.label} target="_blank" rel="noreferrer" aria-label={platform.label}>
-              {socialIcon(platform.label)}
-            </a>
-          ))}
+        <div className="mobile-nav-signature">
+          <img src={MOBILE_NAV_LOGO_IMAGE} alt="Neu-Reality" decoding="async" loading="eager" />
+          <p className="mobile-nav-slogan">
+            <span>For every mind.</span>
+            <span>For everything that reshapes us.</span>
+          </p>
+          <div className="mobile-nav-socials" aria-label="Social media links">
+            {footerSocialLinks.map((platform) => (
+              <a href={platform.url} key={platform.label} target="_blank" rel="noreferrer" aria-label={platform.label}>
+                {socialIcon(platform.label)}
+              </a>
+            ))}
+          </div>
         </div>
       </nav>
     </header>
@@ -1765,7 +1773,7 @@ function Footer() {
   return (
     <footer className="site-footer">
       <div className="footer-about">
-        <h2>About Us</h2>
+        <img className="footer-logo" src={MOBILE_NAV_LOGO_IMAGE} alt="Neu-Reality" decoding="async" loading="lazy" />
         <p>
           Neu-Reality (神经现实) is one of China’s leading independent science communication
           platforms dedicated to neuroscience and artificial intelligence. Over the past decade,
