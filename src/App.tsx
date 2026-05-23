@@ -1245,8 +1245,7 @@ function Header() {
         <div className="mobile-nav-signature">
           <img src={MOBILE_NAV_LOGO_IMAGE} alt="Neu-Reality" decoding="async" loading="eager" />
           <p className="mobile-nav-slogan">
-            <span>For every mind.</span>
-            <span>For everything that reshapes us.</span>
+            <span>For Every Mind</span>
           </p>
           <div className="mobile-nav-socials" aria-label="Social media links">
             {footerSocialLinks.map((platform) => (
