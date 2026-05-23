@@ -66,6 +66,7 @@ const navItems = [
   ["Events", "events"],
   ["Academy", "academy"],
   ["Neuroaesthetics", "neuroaesthetics"],
+  ["Newsletter", "newsletter"],
   ["Partners", "partners"]
 ] as const;
 
@@ -1192,6 +1193,25 @@ function Header() {
     };
   }, []);
 
+  useEffect(() => {
+    if (!isMenuOpen) return undefined;
+
+    const previousOverflow = document.body.style.overflow;
+    const onKeyDown = (event: KeyboardEvent) => {
+      if (event.key === "Escape") {
+        setIsMenuOpen(false);
+      }
+    };
+
+    document.body.style.overflow = "hidden";
+    window.addEventListener("keydown", onKeyDown);
+
+    return () => {
+      document.body.style.overflow = previousOverflow;
+      window.removeEventListener("keydown", onKeyDown);
+    };
+  }, [isMenuOpen]);
+
   return (
     <header className={`site-header${isMenuOpen ? " is-menu-open" : ""}${isScrolled ? " is-scrolled" : ""}`}>
       <a className="brand" href="/#top" aria-label="Neu-Reality home">
@@ -1208,6 +1228,7 @@ function Header() {
         {isMenuOpen ? <X size={20} /> : <Menu size={20} />}
       </button>
       <nav id="primary-navigation" aria-label="Primary navigation">
+        <span className="mobile-nav-heading">Menu</span>
         {navItems.map(([label, href]) => (
           <a href={`/#${href}`} key={href} onClick={() => setIsMenuOpen(false)}>
             {label}
@@ -1219,6 +1240,13 @@ function Header() {
           <a href={chinesePageUrl()} onClick={() => setIsMenuOpen(false)}>
             CN
           </a>
+        </div>
+        <div className="mobile-nav-socials" aria-label="Social media links">
+          {footerSocialLinks.map((platform) => (
+            <a href={platform.url} key={platform.label} target="_blank" rel="noreferrer" aria-label={platform.label}>
+              {socialIcon(platform.label)}
+            </a>
+          ))}
         </div>
       </nav>
     </header>
