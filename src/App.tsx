@@ -18,14 +18,15 @@ import {
   Video,
   X,
 } from "lucide-react";
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { defaultContent, PlatformLink, SiteContent } from "./content";
 
 const STORAGE_KEY = "neu-reality-content-v11";
 const HERO_IMAGE = "/assets/hero-illustration.jpg";
 const LOGO_IMAGE = "/assets/neu-reality-logo-white.png";
 const MOBILE_NAV_LOGO_IMAGE = "/assets/mobile-nav-logo.png";
-const COMMUNITY_VIDEO = "/assets/BG Video.mp4";
+const COMMUNITY_VIDEO = "/assets/bg-video-h264.mp4";
+const COMMUNITY_VIDEO_POSTER = "/assets/neu-reality-vision-field.png";
 
 type SectionKey = keyof SiteContent;
 type StaticPageKey = "about" | "privacy" | "terms";
@@ -881,9 +882,7 @@ function App() {
         </EditorialSection>
 
         <section className="community-video section-anchor" id="community" aria-labelledby="community-video-title">
-          <video className="community-video__media" autoPlay muted loop playsInline preload="metadata" aria-hidden="true">
-            <source src={COMMUNITY_VIDEO} type="video/mp4" />
-          </video>
+          <CommunityBackgroundVideo />
           <div className="community-video__copy">
             <h2 id="community-video-title">
               A Community for <em>Curious Minds</em>
@@ -1258,6 +1257,69 @@ function Header() {
         </div>
       </nav>
     </header>
+  );
+}
+
+function CommunityBackgroundVideo() {
+  const videoRef = useRef<HTMLVideoElement>(null);
+
+  useEffect(() => {
+    const video = videoRef.current;
+    if (!video) return;
+
+    video.muted = true;
+    video.defaultMuted = true;
+    video.playsInline = true;
+
+    const tryPlay = () => {
+      const playback = video.play();
+      if (playback) {
+        playback.catch(() => {
+          // Mobile browsers can defer autoplay until the first user gesture.
+        });
+      }
+    };
+
+    const handleVisibilityChange = () => {
+      if (!document.hidden) {
+        tryPlay();
+      }
+    };
+
+    tryPlay();
+    video.addEventListener("canplay", tryPlay);
+    video.addEventListener("loadeddata", tryPlay);
+    document.addEventListener("visibilitychange", handleVisibilityChange);
+    window.addEventListener("touchstart", tryPlay, { once: true, passive: true });
+    window.addEventListener("click", tryPlay, { once: true });
+
+    return () => {
+      video.removeEventListener("canplay", tryPlay);
+      video.removeEventListener("loadeddata", tryPlay);
+      document.removeEventListener("visibilitychange", handleVisibilityChange);
+      window.removeEventListener("touchstart", tryPlay);
+      window.removeEventListener("click", tryPlay);
+    };
+  }, []);
+
+  return (
+    <video
+      ref={videoRef}
+      className="community-video__media"
+      autoPlay
+      muted
+      loop
+      playsInline
+      preload="auto"
+      poster={COMMUNITY_VIDEO_POSTER}
+      aria-hidden="true"
+      webkit-playsinline="true"
+      x5-video-player-type="h5-page"
+      x5-video-player-fullscreen="true"
+      x5-video-orientation="portrait"
+    >
+      <source src={COMMUNITY_VIDEO} type="video/mp4" />
+    </video>
   );
 }
 
