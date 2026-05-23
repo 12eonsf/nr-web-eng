@@ -1148,9 +1148,9 @@ function App() {
             <aside className="section-aside">
               <span>Partners</span>
               <h2>Our partners</h2>
+              <p>A global network across academia, publishing, technology, and nonprofits.</p>
             </aside>
             <div className="partners__content">
-              <p>A global network across academia, publishing, technology, and nonprofits.</p>
               <div className="logo-wall" aria-label="Partner logos">
                 <div className="logo-wall__track">
                   {[...content.partners, ...content.partners].map((partner, index) => (

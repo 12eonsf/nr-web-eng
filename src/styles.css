@@ -1907,6 +1907,7 @@ svg {
 }
 
 .partners .section-aside::before {
+  display: none;
   width: 100%;
   height: 1px;
   margin-bottom: 2px;
