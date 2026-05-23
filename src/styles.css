@@ -65,6 +65,10 @@ svg {
   display: block;
 }
 
+.optimized-picture {
+  display: contents;
+}
+
 .site-shell {
   min-height: 100vh;
   overflow-x: hidden;

@@ -737,7 +737,13 @@ function App() {
       <main id="top">
         <section className="hero section-anchor" id="vision">
           <div className="hero__image" aria-hidden="true">
-            <img src={HERO_IMAGE} alt="Illustration of a figure moving through a neural tunnel" />
+            <OptimizedImage
+              src={HERO_IMAGE}
+              alt="Illustration of a figure moving through a neural tunnel"
+              decoding="async"
+              fetchPriority="high"
+              loading="eager"
+            />
           </div>
           <div className="hero__index" aria-label="Hero slide navigation">
             <div className="hero__dots" role="tablist" aria-label="Hero slides">
@@ -818,7 +824,7 @@ function App() {
           <div className="interview-grid">
             {content.interviews.map((interview) => (
               <article className="content-card interview-card" key={interview.name}>
-                <img src={interview.headshot} alt={interview.name} />
+                <OptimizedImage src={interview.headshot} alt={interview.name} decoding="async" loading="lazy" />
                 <div className="content-card__body">
                   <span>{interview.name}</span>
                   <small>{interview.title}</small>
@@ -954,7 +960,7 @@ function App() {
                 </p>
               </div>
               <div className="topic-feature__field" aria-hidden="true">
-                <img src="/assets/Neuroaesthetics/Neuroaesthetics Featured.jpg" alt="" />
+                <OptimizedImage src="/assets/Neuroaesthetics/Neuroaesthetics Featured.jpg" alt="" decoding="async" loading="lazy" />
               </div>
             </div>
 
@@ -987,7 +993,7 @@ function App() {
                         />
                       ) : null}
                       <div className="topic-article__cover">
-                        {item.cover ? <img src={item.cover} alt="" /> : <Camera aria-hidden="true" />}
+                        {item.cover ? <OptimizedImage src={item.cover} alt="" decoding="async" loading="lazy" /> : <Camera aria-hidden="true" />}
                       </div>
                       <div className="topic-article__body">
                         <span>{String(index + 1).padStart(2, "0")}</span>
@@ -1155,7 +1161,7 @@ function App() {
                 <div className="logo-wall__track">
                   {[...content.partners, ...content.partners].map((partner, index) => (
                     <article aria-hidden={index >= content.partners.length} key={`${partner.name}-${index}`}>
-                      {partner.logo ? <img src={partner.logo} alt={index < content.partners.length ? `${partner.name} logo` : ""} /> : <span>{partner.name}</span>}
+                      {partner.logo ? <OptimizedImage src={partner.logo} alt={index < content.partners.length ? `${partner.name} logo` : ""} decoding="async" loading="lazy" /> : <span>{partner.name}</span>}
                     </article>
                   ))}
                 </div>
@@ -1189,7 +1195,7 @@ function Header() {
   return (
     <header className={`site-header${isMenuOpen ? " is-menu-open" : ""}${isScrolled ? " is-scrolled" : ""}`}>
       <a className="brand" href="/#top" aria-label="Neu-Reality home">
-        <img src={LOGO_IMAGE} alt="" />
+        <OptimizedImage src={LOGO_IMAGE} alt="" decoding="async" loading="lazy" />
       </a>
       <button
         className="nav-toggle"
@@ -1312,11 +1318,44 @@ function PodcastListenLinks() {
             target="_blank"
             title={platform.label}
           >
-            <img src={platform.logo} alt="" />
+            <OptimizedImage src={platform.logo} alt="" decoding="async" loading="lazy" />
           </a>
         ))}
       </div>
     </div>
+  );
+}
+
+const rasterAssetPattern = /\.(png|jpe?g)$/i;
+
+function getAvifSrc(src: string) {
+  if (!src.startsWith("/assets/") || !rasterAssetPattern.test(src)) {
+    return null;
+  }
+
+  return src.replace(rasterAssetPattern, ".avif");
+}
+
+function OptimizedImage({
+  alt,
+  src,
+  ...props
+}: React.ImgHTMLAttributes<HTMLImageElement> & {
+  alt: string;
+  src: string;
+}) {
+  const avifSrc = getAvifSrc(src);
+  const image = <img src={src} alt={alt} {...props} />;
+
+  if (!avifSrc) {
+    return image;
+  }
+
+  return (
+    <picture className="optimized-picture">
+      <source srcSet={encodeURI(avifSrc)} type="image/avif" />
+      {image}
+    </picture>
   );
 }
 
@@ -1336,7 +1375,7 @@ function CalloutCard({ icon, title, link }: { icon: React.ReactNode; title: stri
 function Cover({ src, alt }: { src: string; alt: string }) {
   return (
     <div className="cover">
-      {src ? <img src={src} alt={alt} /> : <Camera aria-hidden="true" />}
+      {src ? <OptimizedImage src={src} alt={alt} decoding="async" loading="lazy" /> : <Camera aria-hidden="true" />}
     </div>
   );
 }
@@ -1361,7 +1400,7 @@ function CourseMentor({ course }: { course: SiteContent["courses"][number] }) {
     <div className={`course-mentor${isLogoAvatar ? " course-mentor--logo" : ""}`}>
       <div className={`course-mentor__avatar${isLogoAvatar ? " course-mentor__avatar--logo" : ""}`}>
         {course.mentorAvatar ? (
-          <img src={course.mentorAvatar} alt={`${name} avatar`} />
+          <OptimizedImage src={course.mentorAvatar} alt={`${name} avatar`} decoding="async" loading="lazy" />
         ) : (
           <span aria-hidden="true">{initials}</span>
         )}
@@ -1620,7 +1659,7 @@ function StaticPage({ page }: { page: StaticPageContent }) {
     <main className="static-page" id="top">
       <section className="static-hero" aria-labelledby="static-page-title">
         <div className="static-hero__image" aria-hidden="true">
-          <img src={HERO_IMAGE} alt="" />
+          <OptimizedImage src={HERO_IMAGE} alt="" decoding="async" fetchPriority="high" loading="eager" />
         </div>
         <div className="static-hero__copy">
           <span>{page.eyebrow}</span>
