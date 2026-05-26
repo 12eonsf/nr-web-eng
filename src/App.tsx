@@ -519,8 +519,17 @@ const neuroaestheticsEventLinks = [
   "https://www.bilibili.com/video/BV1Xg411P7zY"
 ] as const;
 
-const newsletterLatestTitle =
-  "💰 Bigger Rewards, Faster Learning? 🫂 Why One Hug Can Stay in Memory for a Lifetime. 🧠 Under Stress, the Brain Really Can Freeze Up. 🤝 Declining Grip Strength May Signal Depression Risk. ✍️ Your Handwriting May Reveal Cognitive Decline. 🛌 Poor Sleep May Accelerate Organ Aging. ♻️ When Data Runs Dry, How Can AI Avoid Self-Consumption? 🤖 China Is Bringing AI Brain–Computer Interfaces Into Real-World Use.";
+const newsletterLatestItems = [
+  "💰 Bigger Rewards, Faster Learning?",
+  "🫂 Why One Hug Can Stay in Memory for a Lifetime.",
+  "🧠 Under Stress, the Brain Really Can Freeze Up.",
+  "🤝 Declining Grip Strength May Signal Depression Risk.",
+  "✍️ Your Handwriting May Reveal Cognitive Decline.",
+  "🛌 Poor Sleep May Accelerate Organ Aging.",
+  "♻️ When Data Runs Dry, How Can AI Avoid Self-Consumption?",
+  "🤖 China Is Bringing AI Brain–Computer Interfaces Into Real-World Use."
+] as const;
+const newsletterLatestTitle = newsletterLatestItems.join(" ");
 const newsletterLatestLink = "https://neu-reality.com/2026/04/newsletter-034/";
 
 const heroSlides = [
@@ -1118,7 +1127,16 @@ function App() {
                 </span>
                 <h3>
                   <a href={newsletterLatestLink} target="_blank" rel="noreferrer">
-                    {newsletterLatestTitle}
+                    {newsletterLatestItems.map((item, index) => (
+                      <span
+                        className="newsletter-latest__headline"
+                        data-tone={index % 2 === 0 ? "ink" : "muted"}
+                        key={item}
+                      >
+                        {item}
+                        {index < newsletterLatestItems.length - 1 ? " " : ""}
+                      </span>
+                    ))}
                   </a>
                 </h3>
               </article>
