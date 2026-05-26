@@ -530,7 +530,7 @@ const newsletterLatestItems = [
   "🤖 China Is Bringing AI Brain–Computer Interfaces Into Real-World Use."
 ] as const;
 const newsletterLatestTitle = newsletterLatestItems.join(" ");
-const newsletterLatestLink = "https://neu-reality.com/2026/04/newsletter-034/";
+const newsletterLatestLink = "https://neu-reality.com/2026/05/newsletter-035/";
 
 const heroSlides = [
   {
