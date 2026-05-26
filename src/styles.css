@@ -1768,6 +1768,7 @@ svg {
 
 .newsletter-section__inner {
   align-items: start;
+  grid-template-columns: clamp(180px, 17vw, 240px) minmax(0, 1fr);
 }
 
 .newsletter-section__content {
@@ -1893,14 +1894,15 @@ svg {
 }
 
 .newsletter-latest h3 {
-  max-width: 20ch;
+  max-width: 100%;
   margin: 0;
   color: var(--ink);
   font-family: var(--serif);
-  font-size: clamp(1.56rem, 3.35vw, 3.65rem);
+  font-size: clamp(1.36rem, 2.15vw, 2.8rem);
   font-weight: 600;
   letter-spacing: 0;
-  line-height: 1.04;
+  line-height: 1.08;
+  overflow-wrap: anywhere;
 }
 
 .newsletter-latest h3 a {
@@ -3402,8 +3404,8 @@ svg {
 
   .newsletter-latest h3 {
     max-width: 100%;
-    font-size: clamp(1.42rem, 6.9vw, 2.12rem);
-    line-height: 1.02;
+    font-size: clamp(1.18rem, 5.35vw, 1.72rem);
+    line-height: 1.08;
   }
 
   .newsletter-cta {
