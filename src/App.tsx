@@ -520,7 +520,7 @@ const neuroaestheticsEventLinks = [
 ] as const;
 
 const newsletterLatestTitle =
-  "🫀 Your Living Environment at 20 May Shape Your Heart in Midlife. ⚙️ A Simple Trick for Maintaining Working Memory. 🧠 Could Fish Oil Actually Harm the Brain?";
+  "💰 Bigger Rewards, Faster Learning? 🫂 Why One Hug Can Stay in Memory for a Lifetime. 🧠 Under Stress, the Brain Really Can Freeze Up. 🤝 Declining Grip Strength May Signal Depression Risk. ✍️ Your Handwriting May Reveal Cognitive Decline. 🛌 Poor Sleep May Accelerate Organ Aging. ♻️ When Data Runs Dry, How Can AI Avoid Self-Consumption? 🤖 China Is Bringing AI Brain–Computer Interfaces Into Real-World Use.";
 const newsletterLatestLink = "https://neu-reality.com/2026/04/newsletter-034/";
 
 const heroSlides = [
