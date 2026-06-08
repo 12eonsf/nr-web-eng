@@ -1087,6 +1087,10 @@ svg {
   grid-template-columns: 56px minmax(0, 1fr);
 }
 
+.course-mentor--no-avatar {
+  grid-template-columns: minmax(0, 1fr);
+}
+
 .course-mentor__avatar {
   display: grid;
   width: 38px;

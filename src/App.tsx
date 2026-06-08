@@ -1504,6 +1504,7 @@ function CourseMentor({ course }: { course: SiteContent["courses"][number] }) {
   const name = course.mentorName || (hasLegacyName ? legacyParts[0] : "Faculty Mentor");
   const title = course.mentorTitle || (!hasMentorName ? (hasLegacyName ? legacyParts.slice(1).join(", ") : legacyMentor) : "");
   const isLogoAvatar = course.mentorAvatarVariant === "logo";
+  const showAvatar = course.mentorAvatar !== null;
   const initials = name
     .split(/\s+/)
     .filter(Boolean)
@@ -1513,14 +1514,16 @@ function CourseMentor({ course }: { course: SiteContent["courses"][number] }) {
     .toUpperCase();
 
   return (
-    <div className={`course-mentor${isLogoAvatar ? " course-mentor--logo" : ""}`}>
-      <div className={`course-mentor__avatar${isLogoAvatar ? " course-mentor__avatar--logo" : ""}`}>
-        {course.mentorAvatar ? (
-          <OptimizedImage src={course.mentorAvatar} alt={`${name} avatar`} decoding="async" loading="lazy" />
-        ) : (
-          <span aria-hidden="true">{initials}</span>
-        )}
-      </div>
+    <div className={`course-mentor${isLogoAvatar ? " course-mentor--logo" : ""}${showAvatar ? "" : " course-mentor--no-avatar"}`}>
+      {showAvatar ? (
+        <div className={`course-mentor__avatar${isLogoAvatar ? " course-mentor__avatar--logo" : ""}`}>
+          {course.mentorAvatar ? (
+            <OptimizedImage src={course.mentorAvatar} alt={`${name} avatar`} decoding="async" loading="lazy" />
+          ) : (
+            <span aria-hidden="true">{initials}</span>
+          )}
+        </div>
+      ) : null}
       <div className="course-mentor__copy">
         <strong>{name}</strong>
         {title ? <small>{title}</small> : null}

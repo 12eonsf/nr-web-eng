@@ -34,7 +34,7 @@ export type Course = {
   cover: string;
   theme: string;
   mentor?: string;
-  mentorAvatar?: string;
+  mentorAvatar?: string | null;
   mentorAvatarVariant?: "photo" | "logo";
   mentorName: string;
   mentorTitle: string;
@@ -330,9 +330,9 @@ export const defaultContent: SiteContent = {
     {
       cover: "/assets/academy/Memory.jpg",
       theme: "The Neuroscience of Memory",
-      mentorAvatar: "/assets/falculty/Lila-Davachi.png",
-      mentorName: "Lila Davachi",
-      mentorTitle: "Professor of Psychology at Columbia University",
+      mentorAvatar: null,
+      mentorName: "To be announced",
+      mentorTitle: "",
       intro:
         "This course explores how the brain encodes, consolidates, and retrieves memories, showing how everyday experiences become lasting episodic memories.",
       details: {
