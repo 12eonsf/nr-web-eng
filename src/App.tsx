@@ -949,7 +949,11 @@ function App() {
                 <div className="content-card__body">
                   <span>{course.type}</span>
                   <h3>{course.theme}</h3>
-                  <CourseMentor course={course} />
+                  {course.mentors?.length
+                    ? course.mentors.map((mentor) => (
+                        <CourseMentor key={mentor.mentorName} course={{ ...course, ...mentor }} />
+                      ))
+                    : <CourseMentor course={course} />}
                   <p>{course.intro}</p>
                   <CourseDetails details={course.details} />
                   <CourseTags tags={course.tags} />
