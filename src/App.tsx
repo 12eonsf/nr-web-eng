@@ -836,7 +836,7 @@ function App() {
           <div className="interview-grid">
             {content.interviews.map((interview) => (
               <article className="content-card interview-card" key={interview.name}>
-                <OptimizedImage src={interview.headshot} alt={interview.name} decoding="async" loading="lazy" />
+                <OptimizedImage src={interview.headshot} alt={interview.name} fallback={interview.name.split(/\s+/).slice(0, 2).map((part) => part[0]).join("")} decoding="async" loading="lazy" />
                 <div className="content-card__body">
                   <span>{interview.name}</span>
                   <small>{interview.title}</small>
@@ -1184,7 +1184,7 @@ function App() {
                 <div className="logo-wall__track">
                   {[...content.partners, ...content.partners].map((partner, index) => (
                     <article aria-hidden={index >= content.partners.length} key={`${partner.name}-${index}`}>
-                      {partner.logo ? <OptimizedImage src={partner.logo} alt={index < content.partners.length ? `${partner.name} logo` : ""} decoding="async" loading="lazy" /> : <span>{partner.name}</span>}
+                      {partner.logo ? <OptimizedImage src={partner.logo} alt={index < content.partners.length ? `${partner.name} logo` : ""} fallback={partner.name} decoding="async" loading="lazy" /> : <span>{partner.name}</span>}
                     </article>
                   ))}
                 </div>
@@ -1456,27 +1456,47 @@ function getAvifSrc(src: string) {
   return src.replace(rasterAssetPattern, ".avif");
 }
 
-function OptimizedImage({
-  alt,
-  src,
-  ...props
-}: React.ImgHTMLAttributes<HTMLImageElement> & {
+type OptimizedImageProps = React.ImgHTMLAttributes<HTMLImageElement> & {
   alt: string;
   src: string;
-}) {
-  const avifSrc = getAvifSrc(src);
-  const image = <img src={src} alt={alt} {...props} />;
+  fallback?: React.ReactNode;
+};
 
-  if (!avifSrc) {
-    return image;
+function OptimizedImage(props: OptimizedImageProps) {
+  return <ImageWithFallback key={props.src} {...props} />;
+}
+
+function ImageWithFallback({ alt, src, fallback, onError, ...props }: OptimizedImageProps) {
+  const [stage, setStage] = useState<"preferred" | "original" | "failed">("preferred");
+  const avifSrc = stage === "preferred" ? getAvifSrc(src) : null;
+
+  if (!src || stage === "failed") {
+    return (
+      <span className="image-fallback" role={alt ? "img" : undefined} aria-label={alt || undefined} aria-hidden={alt ? undefined : true}>
+        {fallback ?? <Camera size={20} aria-hidden="true" />}
+      </span>
+    );
   }
 
-  return (
+  const image = (
+    <img
+      {...props}
+      src={src}
+      alt={alt}
+      onError={(event) => {
+        const { currentSrc, src: originalSrc } = event.currentTarget;
+        setStage(avifSrc && currentSrc !== originalSrc ? "original" : "failed");
+        onError?.(event);
+      }}
+    />
+  );
+
+  return avifSrc ? (
     <picture className="optimized-picture">
       <source srcSet={encodeURI(avifSrc)} type="image/avif" />
       {image}
     </picture>
-  );
+  ) : image;
 }
 
 function CalloutCard({ icon, title, link }: { icon: React.ReactNode; title: string; link: string }) {
@@ -1522,7 +1542,7 @@ function CourseMentor({ course }: { course: SiteContent["courses"][number] }) {
       {showAvatar ? (
         <div className={`course-mentor__avatar${isLogoAvatar ? " course-mentor__avatar--logo" : ""}`}>
           {course.mentorAvatar ? (
-            <OptimizedImage src={course.mentorAvatar} alt={`${name} avatar`} decoding="async" loading="lazy" />
+            <OptimizedImage src={course.mentorAvatar} alt="" fallback={initials} decoding="async" loading="lazy" />
           ) : (
             <span aria-hidden="true">{initials}</span>
           )}
