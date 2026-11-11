@@ -607,7 +607,7 @@ const adminSections: { key: SectionKey; label: string; fields: FieldConfig[] }[]
       { key: "mentorName", label: "Mentor Name" },
       { key: "mentorTitle", label: "Mentor Title" },
       { key: "intro", label: "Course Intro", kind: "textarea" },
-      { key: "type", label: "Type", kind: "select", options: ["Course", "Workshop"] },
+      { key: "type", label: "Type", kind: "select", options: ["Course", "Workshop", "Masterclass"] },
       { key: "location", label: "Location / Online" }
     ]
   },

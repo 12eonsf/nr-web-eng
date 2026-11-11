@@ -56,7 +56,7 @@ export type Course = {
   };
   tags?: string[] | string;
   enrollmentStatus?: "open" | "completed";
-  type: "Course" | "Workshop";
+  type: "Course" | "Workshop" | "Masterclass";
   location: string;
 };
 
@@ -361,7 +361,7 @@ export const defaultContent: SiteContent = {
       },
       tags: ["Neuroaesthetics", "Visual Perception", "Art History"],
       enrollmentStatus: "completed",
-      type: "Course",
+      type: "Masterclass",
       location: "Paris"
     },
     {
