@@ -319,7 +319,7 @@ export const defaultContent: SiteContent = {
       details: {
         format: "Livestreaming",
         duration: "7 weeks",
-        start: "Start: October, 2025",
+        start: "Start: November, 2026",
         platform: "Zoom"
       },
       tags: ["Computational Neuroscience", "Cognitive Neuroscience", "Neuropharmacology", "Neuroeconomics", "Decision-Making"],
@@ -328,23 +328,22 @@ export const defaultContent: SiteContent = {
       location: "Online"
     },
     {
-      cover: "/assets/academy/Memory.jpg",
-      theme: "The Neuroscience of Memory",
+      cover: "https://masterclass.neu-reality.com/neuroaesthetics_program/assets/art/botticelli-venus-head-ultrahd-1400.webp",
+      theme: "Neuroaesthetics in Europe",
       mentorAvatar: null,
-      mentorName: "To be announced",
-      mentorTitle: "",
+      mentorName: "Semir Zeki and David Freedberg",
+      mentorTitle: "University College London and Columbia University",
       intro:
-        "This course explores how the brain encodes, consolidates, and retrieves memories, showing how everyday experiences become lasting episodic memories.",
+        "Explore how the brain perceives and responds to art through online sessions and an on-site program in Paris.",
       details: {
-        format: "Livestreaming",
-        duration: "7 weeks",
-        start: "Start: September, 2026",
-        platform: "Zoom"
+        format: "In-person + Online",
+        start: "Start: August, 2026",
+        venue: "Paris"
       },
-      tags: ["Cognitive Neuroscience", "Psychology", "Learning", "Memory"],
-      enrollmentStatus: "open",
+      tags: ["Neuroaesthetics", "Visual Perception", "Art History"],
+      enrollmentStatus: "completed",
       type: "Course",
-      location: "Online"
+      location: "Paris + Online"
     },
     {
       cover: "/assets/academy/cognitive-control.jpg",
