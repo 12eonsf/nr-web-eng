@@ -30,9 +30,16 @@ export type EventItem = {
   link?: string;
 };
 
+export type CourseMentorProfile = {
+  mentorName: string;
+  mentorTitle: string;
+  mentorAvatar: string;
+};
+
 export type Course = {
   cover: string;
   theme: string;
+  mentors?: CourseMentorProfile[];
   mentor?: string;
   mentorAvatar?: string | null;
   mentorAvatarVariant?: "photo" | "logo";
@@ -328,17 +335,29 @@ export const defaultContent: SiteContent = {
       location: "Online"
     },
     {
-      cover: "https://masterclass.neu-reality.com/neuroaesthetics_program/assets/art/botticelli-venus-head-ultrahd-1400.webp",
+      cover: "/media/zekilecture.jpg",
       theme: "Neuroaesthetics in Europe",
-      mentorAvatar: null,
-      mentorName: "Semir Zeki and David Freedberg",
-      mentorTitle: "University College London and Columbia University",
+      mentorName: "",
+      mentorTitle: "",
+      mentors: [
+        {
+          mentorName: "Semir Zeki",
+          mentorTitle: "Emeritus Professor of Neuroaesthetics at University College London",
+          mentorAvatar: "https://masterclass.neu-reality.com/neuroaesthetics_program/assets/faculty/semir-zeki-portrait-480.webp"
+        },
+        {
+          mentorName: "David Freedberg",
+          mentorTitle: "Pierre Matisse Professor of the History of Art at Columbia University",
+          mentorAvatar: "https://masterclass.neu-reality.com/neuroaesthetics_program/assets/faculty/david-freedberg-portrait-480.webp"
+        }
+      ],
       intro:
         "Explore how the brain perceives and responds to art through online sessions and an on-site program in Paris.",
       details: {
         format: "In-person + Online",
+        duration: "15 Days",
         start: "Start: August, 2026",
-        venue: "Paris"
+        venue: "Paris + Online"
       },
       tags: ["Neuroaesthetics", "Visual Perception", "Art History"],
       enrollmentStatus: "completed",
