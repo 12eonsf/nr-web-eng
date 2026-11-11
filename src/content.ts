@@ -343,12 +343,12 @@ export const defaultContent: SiteContent = {
         {
           mentorName: "Semir Zeki",
           mentorTitle: "Emeritus Professor of Neuroaesthetics at University College London",
-          mentorAvatar: "https://masterclass.neu-reality.com/neuroaesthetics_program/assets/faculty/semir-zeki-portrait-480.webp"
+          mentorAvatar: "/media/semir-zeki-portrait.jpg"
         },
         {
           mentorName: "David Freedberg",
           mentorTitle: "Pierre Matisse Professor of the History of Art at Columbia University",
-          mentorAvatar: "https://masterclass.neu-reality.com/neuroaesthetics_program/assets/faculty/david-freedberg-portrait-480.webp"
+          mentorAvatar: "/media/david-freedberg-portrait.jpg"
         }
       ],
       intro:
