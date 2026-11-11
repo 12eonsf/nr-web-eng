@@ -352,17 +352,17 @@ export const defaultContent: SiteContent = {
         }
       ],
       intro:
-        "Explore how the brain perceives and responds to art through online sessions and an on-site program in Paris.",
+        "Explore how the brain constructs colour and form, perceives motion and ambiguity, and experiences beauty. Examine how Renaissance and Baroque artworks evoke emotion and empathy, and where neuroscience reaches its limits in explaining our responses to art.",
       details: {
         format: "In-person + Online",
         duration: "15 Days",
         start: "Start: August, 2026",
-        venue: "Paris + Online"
+        venue: "Paris"
       },
       tags: ["Neuroaesthetics", "Visual Perception", "Art History"],
       enrollmentStatus: "completed",
       type: "Course",
-      location: "Paris + Online"
+      location: "Paris"
     },
     {
       cover: "/assets/academy/cognitive-control.jpg",
